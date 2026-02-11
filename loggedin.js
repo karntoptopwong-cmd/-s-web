@@ -9,6 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuBtn = document.getElementById("menuBtn");
   const sidebar = document.getElementById("sidebar");
   const profileArea = document.getElementById("profileArea");
+  const historyBtn = document.getElementById("historyBtn");
+
+if (historyBtn) {
+  historyBtn.addEventListener("click", () => {
+    window.location.href = "history.html";
+  });
+}
+
   const mouseLight = document.getElementById("mouse-light");
 
   if (!welcomeMsg || !pointsDisplay || !logoutBtn || !menuBtn || !sidebar) {
@@ -59,3 +67,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 }); // ⭐⭐⭐ อันนี้แหละที่ขาด
+
