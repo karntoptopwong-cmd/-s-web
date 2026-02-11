@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuBtn = document.getElementById("menuBtn");
   const sidebar = document.getElementById("sidebar");
   const profileArea = document.getElementById("profileArea");
+  const historyArea = document.getElementById("historyArea");
   const mouseLight = document.getElementById("mouse-light");
 
   if (!welcomeMsg || !pointsDisplay || !logoutBtn || !menuBtn || !sidebar) {
@@ -59,3 +60,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 }); // ⭐⭐⭐ อันนี้แหละที่ขาด
+
