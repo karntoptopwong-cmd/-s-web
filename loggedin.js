@@ -79,6 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
   profileArea.addEventListener("click", () => {
     window.location.href = "profile.html";
   });
+  document.getElementById("historyBtn").addEventListener("click", function() {
+    window.location.href = "history.html";
+});
+
 
   // ===== Logout =====
   logoutBtn.addEventListener("click", () => {
@@ -100,3 +104,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
