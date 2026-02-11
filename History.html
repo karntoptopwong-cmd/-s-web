@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+<div class="profile-card">
+
+    <!-- avatar -->
+    <img src="image-Photoroom.png" alt="avatar" class="avatar">
+
+    <h2 id="usernameDisplay"></h2>
+
+   <form id="profileForm">
+
+  <div class="field-with-edit">
+    <label>ชื่อ - นามสกุล</label>
+
+    <button type="button" id="editBtn" class="edit-btn">✏️ Edit</button>
+
+    <input type="text" id="fullname" disabled required>
+  </div>
+
+  <label>ชั้น</label>
+  <input type="text" id="class" disabled required>
+
+  <label>เลขที่</label>
+  <input type="text" id="number" disabled required>
+
+  <label>อีเมล</label>
+  <input type="email" id="email" disabled required>
+
+  <label>เบอร์โทร</label>
+  <input type="tel" id="phone" disabled>
+
+  <button type="submit" id="saveBtn" class="save-btn" disabled>Save</button>
+</form>
+
+    <a href="loggedin.html" class="back-btn">Back</a>
+
+</div>
+
+<div id="mouse-light"></div>
+    
+<script src="profile.js"></script>
+
+</body>
+</html>
+
+
+
+
+
 
