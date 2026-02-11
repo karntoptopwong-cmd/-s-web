@@ -1,39 +1,14 @@
-// ===== Auth Guard =====
-function checkAuth() {
-  const sessionRaw = localStorage.getItem("session");
-  if (!sessionRaw) return null;
-
-  let session;
-  try {
-    session = JSON.parse(sessionRaw);
-  } catch {
-    localStorage.removeItem("session");
-    return null;
-  }
-
-  if (!session.token || Date.now() > session.expireAt) {
-    localStorage.removeItem("session");
-    return null;
-  }
-
-  return session;
-}
-
 document.addEventListener("DOMContentLoaded", () => {
 
-  const session = checkAuth();
-  if (!session) {
-    window.location.href = "index.html";
-    return;
-  }
+  const username = localStorage.getItem("currentUser");
 
   const welcomeMsg = document.getElementById("welcomeMsg");
   const pointsDisplay = document.getElementById("points");
   const logoutBtn = document.getElementById("logoutBtn");
+
   const menuBtn = document.getElementById("menuBtn");
   const sidebar = document.getElementById("sidebar");
   const profileArea = document.getElementById("profileArea");
-  const historyArea = document.getElementById("historyArea");
   const mouseLight = document.getElementById("mouse-light");
 
   if (!welcomeMsg || !pointsDisplay || !logoutBtn || !menuBtn || !sidebar) {
@@ -41,27 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // ===== โหลดข้อมูล user จาก session =====
-  const userRaw = localStorage.getItem(`user_${session.userId}`);
-  if (!userRaw) {
+  if (!username) {
     window.location.href = "index.html";
     return;
   }
-
-  let user;
-  try {
-    user = JSON.parse(userRaw);
-  } catch {
-    window.location.href = "index.html";
-    return;
-  }
-
-  const username = user.username;
 
   welcomeMsg.textContent = `Welcome, ${username}!`;
 
-  // ===== Points =====
-  const pointKey = `points_${session.userId}`;
+  const pointKey = `points_${username}`;
   let points = localStorage.getItem(pointKey);
 
   if (points === null) {
@@ -71,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   pointsDisplay.textContent = `Points: ${points}`;
 
-  // ===== Menu =====
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
   });
@@ -79,18 +40,12 @@ document.addEventListener("DOMContentLoaded", () => {
   profileArea.addEventListener("click", () => {
     window.location.href = "profile.html";
   });
-  document.getElementById("historyBtn").addEventListener("click", function() {
-    window.location.href = "history.html";
-});
 
-
-  // ===== Logout =====
   logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("session");
+    localStorage.removeItem("currentUser");
     window.location.href = "index.html";
   });
 
-  // ===== Mouse Light =====
   document.addEventListener("mousemove", (e) => {
     if (!mouseLight) return;
 
@@ -103,5 +58,4 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   });
 
-});
-
+}); // ⭐⭐⭐ อันนี้แหละที่ขาด
