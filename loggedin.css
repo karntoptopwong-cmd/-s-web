@@ -96,6 +96,7 @@ button {
   margin-bottom: 12px;
   background: #f1f1f1;
   color: #333;
+  cursor: pointer;
 }
 
 .menu-list button:hover {
@@ -116,4 +117,5 @@ button {
   z-index: 999;
   transition: background 0.05s linear;
 }
+
 
