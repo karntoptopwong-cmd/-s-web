@@ -10,13 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const sidebar = document.getElementById("sidebar");
   const profileArea = document.getElementById("profileArea");
   const historyBtn = document.getElementById("historyBtn");
-
-if (historyBtn) {
-  historyBtn.addEventListener("click", () => {
-    window.location.href = "history.html";
-  });
-}
-
   const mouseLight = document.getElementById("mouse-light");
 
   if (!welcomeMsg || !pointsDisplay || !logoutBtn || !menuBtn || !sidebar) {
@@ -31,40 +24,61 @@ if (historyBtn) {
 
   welcomeMsg.textContent = `Welcome, ${username}!`;
 
+  // ===== Points =====
   const pointKey = `points_${username}`;
-  let points = localStorage.getItem(pointKey);
+  let pointsRaw = localStorage.getItem(pointKey);
+  let points = 0;
 
-  if (points === null) {
-    points = 0;
-    localStorage.setItem(pointKey, points);
+  if (pointsRaw !== null) {
+    const parsed = Number(pointsRaw);
+    if (!Number.isNaN(parsed) && parsed >= 0) {
+      points = parsed;
+    } else {
+      // ข้อมูลพัง → reset
+      localStorage.setItem(pointKey, 0);
+      points = 0;
+    }
+  } else {
+    localStorage.setItem(pointKey, 0);
   }
 
   pointsDisplay.textContent = `Points: ${points}`;
 
+  // ===== Menu =====
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
   });
 
-  profileArea.addEventListener("click", () => {
-    window.location.href = "profile.html";
-  });
+  // ===== Navigation =====
+  if (profileArea) {
+    profileArea.addEventListener("click", () => {
+      window.location.href = "profile.html";
+    });
+  }
 
+  if (historyBtn) {
+    historyBtn.addEventListener("click", () => {
+      window.location.href = "history.html";
+    });
+  }
+
+  // ===== Logout =====
   logoutBtn.addEventListener("click", () => {
     localStorage.removeItem("currentUser");
     window.location.href = "index.html";
   });
 
-  document.addEventListener("mousemove", (e) => {
-    if (!mouseLight) return;
+  // ===== Mouse Light =====
+  if (mouseLight) {
+    document.addEventListener("mousemove", (e) => {
+      mouseLight.style.background = `
+        radial-gradient(
+          circle at ${e.clientX}px ${e.clientY}px,
+          rgba(255, 255, 255, 0.2),
+          rgba(0, 0, 0, 0.6) 40%
+        )
+      `;
+    });
+  }
 
-    mouseLight.style.background = `
-      radial-gradient(
-        circle at ${e.clientX}px ${e.clientY}px,
-        rgba(255, 255, 255, 0.2),
-        rgba(0, 0, 0, 0.6) 40%
-      )
-    `;
-  });
-
-}); // ⭐⭐⭐ อันนี้แหละที่ขาด
-
+});
