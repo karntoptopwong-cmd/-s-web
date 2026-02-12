@@ -1,16 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const form = document.getElementById('loginForm');
-  const errorMsg = document.getElementById('errorMsg');
+  const form = document.getElementById("loginForm");
+  const errorMsg = document.getElementById("errorMsg");
   const mouseLight = document.getElementById("mouse-light");
 
-  if (!form) return; // กัน error
+  if (!form) return; 
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value;
+    errorMsg.textContent = ""; // ข้อ 7: clear error ทุกครั้ง
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
 
     const userData = localStorage.getItem(`user_${username}`);
 
@@ -20,22 +22,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let parsedUser;
-
     try {
-      parsedUser = JSON.parse(userData);
+      parsedUser = JSON.parse(userData); 
     } catch (err) {
-      console.error("Invalid user data:", err);
+      console.error("User data corrupted:", err);
       errorMsg.textContent = "User data corrupted. Please register again.";
       localStorage.removeItem(`user_${username}`);
       return;
     }
 
-    if (password === parsedUser.password) {
-      localStorage.setItem('currentUser', username);
-      window.location.href = "loggedin.html";
-    } else {
+    if (password !== parsedUser.password) {
       errorMsg.textContent = "Invalid username or password.";
+      return;
     }
+
+    const session = {
+      userId: username,                
+      token: crypto.randomUUID(),
+      expireAt: Date.now() + 1000 * 60 * 60 // 1 ชั่วโมง
+    };
+
+    localStorage.setItem("session", JSON.stringify(session));
+    localStorage.setItem("currentUser", username);
+
+    window.location.href = "loggedin.html";
   });
 
   // ===== Mouse Light Effect =====
