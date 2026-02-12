@@ -13,8 +13,8 @@
   <style>
     body {
       margin: 0;
-      background: #0f0f0f;
-      color: white;
+      background: #cfbfbf;
+      color: rgb(5, 5, 5);
       font-family: sans-serif;
       overflow: hidden;
     }
@@ -26,7 +26,7 @@
     }
 
     .card {
-      background: #1e1e1e;
+      background: #bbb8b8;
       border-radius: 12px;
       padding: 20px;
       margin-bottom: 15px;
@@ -37,51 +37,12 @@
       margin-bottom: 20px;
     }
 
-    /* menu button */
-    .menu-btn {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 1001;
-      font-size: 24px;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
+   
 
     /* sidebar (reuse style concept) */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -260px;
-      width: 250px;
-      height: 100%;
-      background: #151515;
-      padding: 20px;
-      transition: left 0.3s ease;
-      z-index: 1000;
-    }
+    
 
-    .sidebar.open {
-      left: 0;
-    }
-
-    .menu-list button {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      background: #2a2a2a;
-      color: white;
-      cursor: pointer;
-    }
-
-    .menu-list button:hover {
-      background: #3a3a3a;
-    }
-
+    
     #mouse-light {
       position: fixed;
       inset: 0;
@@ -102,27 +63,10 @@
       Don't have an account? <a href="creat.html">Create an account</a>
 
   <!-- ☰ -->
-  <button id="menuBtn" class="menu-btn">☰</button>
+ 
 
   <!-- Sidebar -->
-  <div id="sidebar" class="sidebar">
-    <div class="menu-list">
-      <button onclick="location.href='loggedin.html'">Home</button>
-      <button onclick="location.href='profile.html'">Profile</button>
-      <button onclick="location.href='history.html'">History</button>
-      <button id="logoutBtn">Log out</button>
-    </div>
-  </div>
-
-  <!-- Content -->
-  <div class="content">
-    <h2>ประวัติการใช้งาน</h2>
-
-    <div class="card">
-      <p id="loginTime">เวลาเข้าสู่ระบบ: -</p>
-      <p id="score">คะแนนที่ได้: -</p>
-    </div>
-  </div>
+ 
 
   <div id="mouse-light"></div>
 
@@ -133,12 +77,7 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
 
-      // ===== Auth Guard (แบบง่าย) =====
-      const currentUser = localStorage.getItem("currentUser");
-      if (!currentUser) {
-        window.location.href = "index.html";
-        return;
-      }
+      
 
       // ===== Menu =====
       const menuBtn = document.getElementById("menuBtn");
@@ -177,6 +116,9 @@
       });
     });
   </script>
+
+</body>
+</html>
 
 </body>
 </html>
