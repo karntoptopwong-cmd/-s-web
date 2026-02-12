@@ -19,7 +19,16 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const parsedUser = JSON.parse(userData);
+    let parsedUser;
+
+    try {
+      parsedUser = JSON.parse(userData);
+    } catch (err) {
+      console.error("Invalid user data:", err);
+      errorMsg.textContent = "User data corrupted. Please register again.";
+      localStorage.removeItem(`user_${username}`);
+      return;
+    }
 
     if (password === parsedUser.password) {
       localStorage.setItem('currentUser', username);
