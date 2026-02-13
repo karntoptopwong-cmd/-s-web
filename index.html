@@ -40,6 +40,25 @@
    
 
     /* sidebar (reuse style concept) */
+    <script>
+function login(){
+
+    // ✅ บันทึกเวลา
+    let historyData = JSON.parse(localStorage.getItem("history")) || [];
+
+    const now = new Date();
+    const formatted =
+        "เข้าใช้งานเมื่อ " +
+        now.toLocaleDateString("th-TH") + " " +
+        now.toLocaleTimeString("th-TH");
+
+    historyData.unshift(formatted);
+    localStorage.setItem("history", JSON.stringify(historyData));
+
+    // ✅ เปลี่ยนหน้าไป loggedin
+    window.location.href = "loggedin.html";
+}
+</script>
     
 
     
@@ -122,3 +141,4 @@
 
 </body>
 </html>
+
