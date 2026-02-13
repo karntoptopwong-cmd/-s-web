@@ -44,6 +44,9 @@
 function login(){
 
     // ✅ บันทึกเวลา
+    <script>
+function login(){
+
     let historyData = JSON.parse(localStorage.getItem("history")) || [];
 
     const now = new Date();
@@ -55,9 +58,10 @@ function login(){
     historyData.unshift(formatted);
     localStorage.setItem("history", JSON.stringify(historyData));
 
-    // ✅ เปลี่ยนหน้าไป loggedin
     window.location.href = "loggedin.html";
 }
+</script>
+  
 </script>
     
 
@@ -141,4 +145,5 @@ function login(){
 
 </body>
 </html>
+
 
