@@ -1,104 +1,32 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>History</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>History</title>
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #dfe9f3, #ffffff);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* กล่องกลาง */
-.card {
-    width: 90%;
-    max-width: 400px;
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    text-align: center;
-}
-
-/* หัวข้อ */
-.card h2 {
-    margin-bottom: 20px;
-}
-
-/* รายการ history */
-.history-item {
-    padding: 12px;
-    margin-bottom: 10px;
-    background: #f4f6f9;
-    border-radius: 8px;
-    font-size: 14px;
-}
-
-/* ปุ่ม */
-button {
-    margin-top: 15px;
-    padding: 10px;
-    width: 100%;
-    border: none;
-    border-radius: 8px;
-    background: #4a90e2;
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #357bd8;
-}
-</style>
+  <link rel="stylesheet" href="history.css">
 </head>
-
 <body>
 
-<div class="card">
+  <!-- ☰ top bar -->
+  <div class="top-bar">
+    <button id="menuBtn">☰</button>
     <h2>History</h2>
+  </div>
 
-    <div id="historyList"></div>
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
+    <button onclick="location.href='loggedin.html'">Home</button>
+    <button onclick="location.href='profile.html'">Profile</button>
+    <button id="logoutBtn">Logout</button>
+  </div>
 
-    
+  <!-- Content -->
+  <div class="content">
+    <div id="historyList" class="history-list"></div>
+  </div>
 
-<script>
-let historyData = JSON.parse(localStorage.getItem("history")) || [];
-
-function displayHistory() {
-    const list = document.getElementById("historyList");
-    list.innerHTML = "";
-
-    if(historyData.length === 0){
-        list.innerHTML = "<p>ยังไม่มีประวัติ</p>";
-        return;
-    }
-
-    historyData.forEach(item => {
-        list.innerHTML += `
-            <div class="history-item">
-                ${item}
-            </div>
-        `;
-    });
-}
-
-function addHistory() {
-    const newItem = "เข้าใช้งานเมื่อ " + new Date().toLocaleString();
-    historyData.unshift(newItem);
-    localStorage.setItem("history", JSON.stringify(historyData));
-    displayHistory();
-}
-
-displayHistory();
-</script>
-
+  <script src="history.js"></script>
 </body>
 </html>
