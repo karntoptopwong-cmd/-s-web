@@ -48,7 +48,6 @@ body {
   left: 0;
 }
 
-.sidebar a,
 .sidebar button {
   display: block;
   margin-bottom: 15px;
@@ -78,10 +77,4 @@ body {
   background: #1f1f1f;
   padding: 15px;
   border-radius: 10px;
-  box-shadow: 0 0 5px rgba(255,255,255,0.05);
-}
-
-.history-card p {
-  margin-bottom: 5px;
-  font-size: 14px;
 }
