@@ -22,28 +22,24 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("currentUser");
     window.location.href = "index.html";
   });
-
-  // ===== Load History =====
  // ===== Load History =====
 const raw = localStorage.getItem("history");
 const historyData = raw ? JSON.parse(raw) : [];
 
+if (historyData.length === 0) {
+  historyList.innerHTML = "<p>ยังไม่มีประวัติ</p>";
+  return;
+}
 
-  if (historyData.length === 0) {
-    historyList.innerHTML = "<p>ยังไม่มีประวัติ</p>";
-    return;
-  }
-
-  historyData.reverse().forEach(item => {
-    const card = document.createElement("div");
-    card.className = "history-card";
-    card.innerHTML = `
-      <p><strong>Date:</strong> ${item.date}</p>
-      <p><strong>Time:</strong> ${item.time}</p>
-      <p><strong>Points:</strong> ${item.points}</p>
-    `;
-    historyList.appendChild(card);
-  });
+historyData.reverse().forEach(item => {
+  const card = document.createElement("div");
+  card.className = "history-card";
+  card.innerHTML = `
+    <p><strong>User:</strong> ${item.user}</p>
+    <p><strong>Time:</strong> ${item.time}</p>
+  `;
+  historyList.appendChild(card);
+});
 
   // mouse light
   document.addEventListener("mousemove", (e) => {
