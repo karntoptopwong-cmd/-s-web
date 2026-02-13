@@ -41,31 +41,28 @@
 
     /* sidebar (reuse style concept) */
     <script>
-function login(){
+<form id="loginForm">
+  <input type="text" id="username" required>
+  <input type="password" id="password" required>
+  <button type="submit">Login</button>
+</form>
 
-    // ✅ บันทึกเวลา
-    <script>
-function login(){
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  e.preventDefault(); // กัน reload
 
-    let historyData = JSON.parse(localStorage.getItem("history")) || [];
+  const now = new Date();
+  const loginTime = now.toLocaleString("th-TH");
 
-    const now = new Date();
-    const formatted =
-        "เข้าใช้งานเมื่อ " +
-        now.toLocaleDateString("th-TH") + " " +
-        now.toLocaleTimeString("th-TH");
+  // 👉 บันทึกเวลา
+  localStorage.setItem("loginTime", loginTime);
 
-    historyData.unshift(formatted);
-    localStorage.setItem("history", JSON.stringify(historyData));
-
-    window.location.href = "loggedin.html";
-}
+  // 👉 ไปหน้า history
+  window.location.href = "history.html";
+});
 </script>
-  
-</script>
-    
 
-    
+
     #mouse-light {
       position: fixed;
       inset: 0;
@@ -145,5 +142,6 @@ function login(){
 
 </body>
 </html>
+
 
 
