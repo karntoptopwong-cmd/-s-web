@@ -24,9 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===== Load History =====
-  const historyKey = `history_${username}`;
-  const raw = localStorage.getItem(historyKey);
-  const historyData = raw ? JSON.parse(raw) : [];
+ // ===== Load History =====
+const raw = localStorage.getItem("history");
+const historyData = raw ? JSON.parse(raw) : [];
+
 
   if (historyData.length === 0) {
     historyList.innerHTML = "<p>ยังไม่มีประวัติ</p>";
