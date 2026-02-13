@@ -1,31 +1,41 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>History</title>
-
   <link rel="stylesheet" href="history.css">
 </head>
 <body>
 
-  <!-- ☰ top bar -->
-  <div class="top-bar">
-    <button id="menuBtn">☰</button>
-    <h2>History</h2>
+  <!-- ☰ -->
+  <button id="menuBtn" class="menu-btn">☰</button>
+
+  <!-- Content -->
+  <div class="content">
+    <h1>History</h1>
+
+    <div id="historyList" class="history-list">
+      <!-- JS จะใส่ card ตรงนี้ -->
+    </div>
   </div>
 
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
-    <button onclick="location.href='loggedin.html'">Home</button>
-    <button onclick="location.href='profile.html'">Profile</button>
-    <button id="logoutBtn">Logout</button>
+
+    <div id="profileArea" class="profile-area">
+      <div class="avatar"></div>
+      <span class="profile-text">Profile</span>
+    </div>
+
+    <div class="menu-list">
+      <button onclick="location.href='loggedin.html'">Home</button>
+      <button onclick="location.href='history.html'">History</button>
+      <button id="logoutBtn">Log Out</button>
+    </div>
+
   </div>
 
-  <!-- Content -->
-  <div class="content">
-    <div id="historyList" class="history-list"></div>
-  </div>
+  <div id="mouse-light"></div>
 
   <script src="history.js"></script>
 </body>
