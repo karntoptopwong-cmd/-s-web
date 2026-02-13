@@ -1,162 +1,105 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>History</title>
-  <link rel="stylesheet" href="loggedin.css">
-  <style>
-    body {
-      margin: 0;
-      background: #0f0f0f;
-      color: white;
-      font-family: sans-serif;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>History</title>
 
-    .content {
-      height: 100vh;
-      overflow-y: auto;
-      padding: 80px 20px 20px;
-    }
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #dfe9f3, #ffffff);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .card {
-      background: #1e1e1e;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    }
+/* กล่องกลาง */
+.card {
+    width: 90%;
+    max-width: 400px;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    text-align: center;
+}
 
-    h2 {
-      margin-bottom: 20px;
-    }
+/* หัวข้อ */
+.card h2 {
+    margin-bottom: 20px;
+}
 
-    /* menu button */
-    .menu-btn {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 1001;
-      font-size: 24px;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
+/* รายการ history */
+.history-item {
+    padding: 12px;
+    margin-bottom: 10px;
+    background: #f4f6f9;
+    border-radius: 8px;
+    font-size: 14px;
+}
 
-    /* sidebar (reuse style concept) */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -260px;
-      width: 250px;
-      height: 100%;
-      background: #151515;
-      padding: 20px;
-      transition: left 0.3s ease;
-      z-index: 1000;
-    }
+/* ปุ่ม */
+button {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    background: #4a90e2;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
 
-    .sidebar.open {
-      left: 0;
-    }
-
-    .menu-list button {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      background: #2a2a2a;
-      color: white;
-      cursor: pointer;
-    }
-
-    .menu-list button:hover {
-      background: #3a3a3a;
-    }
-
-    #mouse-light {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-    }
-  </style>
+button:hover {
+    background: #357bd8;
+}
+</style>
 </head>
+
 <body>
 
-  <!-- ☰ -->
-  <button id="menuBtn" class="menu-btn">☰</button>
+<div class="card">
+    <h2>History</h2>
 
-  <!-- Sidebar -->
-  <div id="sidebar" class="sidebar">
-    <div class="menu-list">
-      <button onclick="location.href='loggedin.html'">Home</button>
-      <button onclick="location.href='profile.html'">Profile</button>
-      <button onclick="location.href='history.html'">History</button>
-      <button id="logoutBtn">Log out</button>
-    </div>
-  </div>
+    <div id="historyList"></div>
 
-  <!-- Content -->
-  <div class="content">
-    <h2>ประวัติการใช้งาน</h2>
+    <button onclick="addHistory()">เพิ่มประวัติ</button>
+</div>
 
-    <div class="card">
-      <p id="loginTime">เวลาเข้าสู่ระบบ: -</p>
-      <p id="score">คะแนนที่ได้: -</p>
-    </div>
-  </div>
+<script>
+let historyData = JSON.parse(localStorage.getItem("history")) || [];
 
-  <div id="mouse-light"></div>
+function displayHistory() {
+    const list = document.getElementById("historyList");
+    list.innerHTML = "";
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-
-      // ===== Auth Guard (แบบง่าย) =====
-      const currentUser = localStorage.getItem("currentUser");
-      if (!currentUser) {
-        window.location.href = "index.html";
+    if(historyData.length === 0){
+        list.innerHTML = "<p>ยังไม่มีประวัติ</p>";
         return;
-      }
+    }
 
-      // ===== Menu =====
-      const menuBtn = document.getElementById("menuBtn");
-      const sidebar = document.getElementById("sidebar");
-
-      menuBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("open");
-      });
-
-      // ===== Logout =====
-      document.getElementById("logoutBtn").addEventListener("click", () => {
-        localStorage.removeItem("currentUser");
-        window.location.href = "index.html";
-      });
-
-      // ===== Load History Data =====
-      const loginTime = localStorage.getItem("loginTime");
-      const score = localStorage.getItem("score");
-
-      document.getElementById("loginTime").textContent =
-        "เวลาเข้าสู่ระบบ: " + (loginTime || "-");
-
-      document.getElementById("score").textContent =
-        "คะแนนที่ได้: " + (score || "0");
-
-      // ===== Mouse Light =====
-      const mouseLight = document.getElementById("mouse-light");
-      document.addEventListener("mousemove", (e) => {
-        mouseLight.style.background = `
-          radial-gradient(
-            circle at ${e.clientX}px ${e.clientY}px,
-            rgba(255,255,255,0.15),
-            rgba(0,0,0,0.7) 40%
-          )
+    historyData.forEach(item => {
+        list.innerHTML += `
+            <div class="history-item">
+                ${item}
+            </div>
         `;
-      });
     });
-  </script>
+}
+
+function addHistory() {
+    const newItem = "เข้าใช้งานเมื่อ " + new Date().toLocaleString();
+    historyData.unshift(newItem);
+    localStorage.setItem("history", JSON.stringify(historyData));
+    displayHistory();
+}
+
+displayHistory();
+</script>
 
 </body>
 </html>
