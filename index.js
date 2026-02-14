@@ -1,45 +1,39 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ===== 1) ดึง session =====
-  const sessionRaw = localStorage.getItem("session");
+  const loginForm = document.getElementById("loginForm");
+  const errorMsg = document.getElementById("errorMsg");
 
-  if (!sessionRaw) {
-    window.location.href = "index.html";
-    return;
-  }
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  let session;
-  try {
-    session = JSON.parse(sessionRaw);
-  } catch {
-    localStorage.removeItem("session");
-    window.location.href = "index.html";
-    return;
-  }
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
 
-  // (ถ้าไม่มีระบบหมดอายุ ตัดส่วนนี้ทิ้งได้)
-  if (session.expireAt && Date.now() > session.expireAt) {
-    localStorage.removeItem("session");
-    window.location.href = "index.html";
-    return;
-  }
+    if (!username || !password) {
+      errorMsg.textContent = "กรุณากรอก username และ password";
+      return;
+    }
 
-  // ✅ ตัวตนผู้ใช้ (มาตรฐานเดียว)
-  const username = session.username;
+    // 🔹 ตัวอย่างตรวจสอบแบบง่าย (localStorage / mock)
+    const storedPassword = localStorage.getItem(`user_${username}`);
 
-  // ===== 2) แจ้ง server ว่าผู้ใช้งานอยู่ =====
-  fetch("https://arduino-api-sain.onrender.com/login?user=" + username)
-    .catch(err => console.error("login notify failed", err));
+    if (storedPassword !== password) {
+      errorMsg.textContent = "Username หรือ Password ไม่ถูกต้อง";
+      return;
+    }
 
-  // ===== 3) ดึงคะแนน =====
-  fetch("https://arduino-api-sain.onrender.com/score")
-    .then(res => res.json())
-    .then(data => {
-      const scoreEl = document.getElementById("score");
-      if (!scoreEl) return;
+    // ✅ สร้าง session (หน้าที่ของหน้า login)
+    const session = {
+      username: username,
+      loginAt: Date.now()
+      // จะเพิ่ม expireAt ทีหลังก็ได้
+    };
 
-      scoreEl.textContent = data[username] ?? 0;
-    })
-    .catch(err => console.error("load score failed", err));
+    localStorage.setItem("session", JSON.stringify(session));
+    localStorage.setItem("currentUser", username);
+
+    // 👉 ไปหน้า logged in
+    window.location.href = "loggedin.html";
+  });
 
 });
