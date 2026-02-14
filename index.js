@@ -1,4 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const username = session.userId;
+  // ✅ แจ้ง server ว่าผู้ใช้นี้กำลังใช้งาน
+fetch("https://arduino-api-sain.onrender.com/login?user=" + username);
+
+
+// ✅ ดึงคะแนนมาแสดง
+fetch("https://arduino-api-sain.onrender.com/score")
+  .then(res => res.json())
+  .then(data => {
+
+    const scoreEl = document.getElementById("score");
+
+    if (!scoreEl) return;
+
+    if (data[username] !== undefined) {
+      scoreEl.textContent = data[username];
+    } else {
+      scoreEl.textContent = 0;
+    }
+
+  });
 
   const sessionRaw = localStorage.getItem("session");
 
@@ -31,3 +52,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
