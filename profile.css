@@ -44,7 +44,7 @@ form {
 /* label */
 label {
     display: block;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 6px;
 }
 
@@ -75,6 +75,7 @@ input {
     color: gray;
     font-size: 12px;
 }
+
 
 
 
