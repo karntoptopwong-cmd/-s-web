@@ -1,6 +1,7 @@
-{
-box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
+
 
 body {
 
@@ -72,3 +73,4 @@ body {
   z-index: 999;
   transition: background 0.05s linear;
 }
+
