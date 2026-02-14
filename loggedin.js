@@ -1,85 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const username = localStorage.getItem("currentUser");
-
-  const welcomeMsg = document.getElementById("welcomeMsg");
-  const pointsDisplay = document.getElementById("points");
-  const logoutBtn = document.getElementById("logoutBtn");
-
-  const menuBtn = document.getElementById("menuBtn");
-  const sidebar = document.getElementById("sidebar");
-  const profileArea = document.getElementById("profileArea");
-  const historyBtn = document.getElementById("historyBtn");
-  const mouseLight = document.getElementById("mouse-light");
-
-  if (!welcomeMsg || !pointsDisplay || !logoutBtn || !menuBtn || !sidebar) {
-    console.error("HTML element ไม่ครบ");
+  const session = getSession();
+  if (!session) {
+    location.href = "index.html";
     return;
   }
 
-  if (!username) {
-    window.location.href = "index.html";
-    return;
-  }
+  const username = session.username;
 
-  welcomeMsg.textContent = `Welcome to the home page, ${username}`;
+  document.getElementById("welcomeMsg").textContent =
+    `Welcome, ${username}`;
 
-  // ===== Points =====
   const pointKey = `points_${username}`;
-  let pointsRaw = localStorage.getItem(pointKey);
-  let points = 0;
+  let points = Number(localStorage.getItem(pointKey)) || 0;
+  localStorage.setItem(pointKey, points);
 
-  if (pointsRaw !== null) {
-    const parsed = Number(pointsRaw);
-    if (!Number.isNaN(parsed) && parsed >= 0) {
-      points = parsed;
-    } else {
-      // ข้อมูลพัง → reset
-      localStorage.setItem(pointKey, 0);
-      points = 0;
-    }
-  } else {
-    localStorage.setItem(pointKey, 0);
-  }
+  document.getElementById("points").textContent =
+    `Points: ${points}`;
 
-  pointsDisplay.textContent = `Points: ${points}`;
-
-  // ===== Menu =====
-  menuBtn.addEventListener("click", () => {
-    sidebar.classList.toggle("open");
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("session");
+    location.href = "index.html";
   });
 
-  // ===== Navigation =====
-  if (profileArea) {
-    profileArea.addEventListener("click", () => {
-      window.location.href = "profile.html";
-    });
-  }
-
-  if (historyBtn) {
-    historyBtn.addEventListener("click", () => {
-      window.location.href = "history.html";
-    });
-  }
-
-  // ===== Logout =====
-  logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("currentUser");
-    window.location.href = "index.html";
+  document.getElementById("historyBtn").addEventListener("click", () => {
+    location.href = "history.html";
   });
 
-  // ===== Mouse Light =====
-  if (mouseLight) {
-    document.addEventListener("mousemove", (e) => {
-      mouseLight.style.background = `
-        radial-gradient(
-          circle at ${e.clientX}px ${e.clientY}px,
-          rgba(255, 255, 255, 0.2),
-          rgba(0, 0, 0, 0.6) 40%
-        )
-      `;
-    });
-  }
-
+  document.getElementById("profileArea").addEventListener("click", () => {
+    location.href = "profile.html";
+  });
 });
-
