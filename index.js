@@ -1,56 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const form = document.getElementById("loginForm");
-  const errorMsg = document.getElementById("errorMsg");
-  const mouseLight = document.getElementById("mouse-light");
+  const sessionRaw = localStorage.getItem("session");
 
-  if (!form) return;
+  if (!sessionRaw) {
+    window.location.href = "index.html";
+    return;
+  }
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  let session;
+  try {
+    session = JSON.parse(sessionRaw);
+  } catch {
+    localStorage.removeItem("session");
+    window.location.href = "index.html";
+    return;
+  }
 
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
+  if (Date.now() > session.expireAt) {
+    localStorage.removeItem("session");
+    window.location.href = "index.html";
+    return;
+  }
 
-    // ✅ ดึง user จาก localStorage (ที่สมัครจาก creat.html)
-    const userData = localStorage.getItem(`user_${username}`);
+  const username = session.userId; // ✅ ตัวตนผู้ใช้จริง
 
-    if (!userData) {
-      errorMsg.textContent = "ไม่พบผู้ใช้";
-      return;
-    }
-
-    const user = JSON.parse(userData);
-
-    if (user.password !== password) {
-      errorMsg.textContent = "รหัสผ่านไม่ถูกต้อง";
-      return;
-    }
-
-    // ✅ สร้าง session
-    const session = {
-      userId: username,
-      token: crypto.randomUUID(),
-      expireAt: Date.now() + 60 * 60 * 1000 // 1 ชั่วโมง
-    };
-
-    localStorage.setItem("session", JSON.stringify(session));
-
-    // ✅ ไปหน้า loggedin
-    window.location.href = "loggedin.html";
-  });
-
-  // ===== Mouse Light Effect =====
-  if (mouseLight) {
-    document.addEventListener("mousemove", (e) => {
-      mouseLight.style.background = `
-        radial-gradient(
-          circle at ${e.clientX}px ${e.clientY}px,
-          rgba(255, 255, 255, 0.2),
-          rgba(0, 0, 0, 0.6) 40%
-        )
-      `;
-    });
+  // แสดง Welcome
+  const welcomeMsg = document.getElementById("welcomeMsg");
+  if (welcomeMsg) {
+    welcomeMsg.textContent = `Welcome ${username}`;
   }
 
 });
