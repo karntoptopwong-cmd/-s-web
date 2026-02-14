@@ -3,40 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <title>History</title>
+
+  <!-- ใช้ sidebar + menu จาก loggedin -->
+  <link rel="stylesheet" href="loggedin.css">
+  <!-- CSS เฉพาะ history -->
   <link rel="stylesheet" href="history.css">
 </head>
 <body>
 
-  <!-- ☰ Menu button -->
+  <!-- ☰ -->
   <button id="menuBtn" class="menu-btn">☰</button>
-
-  <!-- Main Content -->
-  <div class="content">
-    <h1>History</h1>
-
-    <div id="historyList" class="history-list">
-      <!-- history cards -->
-    </div>
-  </div>
 
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
-
-    <div class="profile-area" onclick="location.href='profile.html'">
+    <div id="profileArea" class="profile-area">
       <div class="avatar"></div>
       <span class="profile-text">Profile</span>
     </div>
 
     <div class="menu-list">
-      <button onclick="location.href='loggedin.html'">Home</button>
-      <button onclick="location.href='profile.html'">Profile</button>
-      <button onclick="location.href='history.html'">History</button>
-      <button id="logoutBtn">Log Out</button>
+      <button id="profileBtn">Profile</button>
+      <button disabled>Settings</button>
+      <button id="helpBtn">Help</button>
+      <button id="logoutBtn">Log out</button>
     </div>
-
   </div>
 
-  <!-- Mouse light -->
+  <!-- ===== Card กลางหน้า (เหมือน profile) ===== -->
+  <div class="history-card">
+    <h2>History</h2>
+
+    <div id="historyList" class="history-list">
+      <!-- cards -->
+    </div>
+
+    <a href="loggedin.html" class="back-btn">Back</a>
+  </div>
+
   <div id="mouse-light"></div>
 
   <script src="history.js"></script>
