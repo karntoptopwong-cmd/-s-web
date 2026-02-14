@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const session = getSession();
+
+if (session) {
+  document.getElementById("welcome").innerText =
+    `Welcome ${session.username}`;
+}
+
+
+  const session = getSession();
   if (!session) {
     location.href = "index.html";
     return;
@@ -40,4 +48,5 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
 });
 });
+
 
