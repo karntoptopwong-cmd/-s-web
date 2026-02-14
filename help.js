@@ -1,11 +1,10 @@
+import { requireAuth, logout } from "./auth.js";
+
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ===== ตรวจ login =====
-  const username = localStorage.getItem("currentUser");
-  if (!username) {
-    location.href = "index.html";
-    return;
-  }
+  // ===== 🔐 ตรวจ login กลาง =====
+  const session = requireAuth();
+  if (!session) return;
 
   // ===== element =====
   const menuBtn = document.getElementById("menuBtn");
@@ -34,11 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     location.href = "loggedin.html";
   });
 
-  // ===== logout =====
-  logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("session"); // เผื่อใช้ระบบ session
-    location.href = "index.html";
-  });
+  // ===== logout (ใช้ auth.js เท่านั้น) =====
+  logoutBtn.addEventListener("click", logout);
 
 });
