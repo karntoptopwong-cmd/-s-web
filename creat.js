@@ -1,37 +1,49 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-  const form = document.getElementById("signupForm");
-  const errorMsg = document.getElementById("errorMsg");
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
 
     if (!username || !password || !confirmPassword) {
-      errorMsg.textContent = "กรุณากรอกข้อมูลให้ครบ";
+      errorMsg.textContent = "Please fill in all fields.";
       return;
     }
 
     if (password !== confirmPassword) {
-      errorMsg.textContent = "Passwords do not match";
+      errorMsg.textContent = "Passwords do not match.";
       return;
     }
 
-    // ✅ ใช้ users ตัวเดียวทั้งเว็บ
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+    if (localStorage.getItem(`user_${username}`)) {
+      errorMsg.textContent = "Username already exists.";
+      return;
+    const existingUserRaw = localStorage.getItem(`user_${username}`);
 
-    if (users.find(u => u.username === username)) {
-      errorMsg.textContent = "Username already exists";
+    if (existingUserRaw) {
+      // ✅ กัน JSON เสีย
+      try {
+        JSON.parse(existingUserRaw);
+        errorMsg.textContent = "Username already exists.";
+        return;
+      } catch {
+        // ข้อมูลพัง → ลบแล้วให้สมัครใหม่
+        localStorage.removeItem(`user_${username}`);
+      }
+    }
+
+    const userData = { username, password };
+
+    localStorage.setItem(
+      `user_${username}`,
+      JSON.stringify(userData)
+    );
+    try {
+      localStorage.setItem(
+        `user_${username}`,
+        JSON.stringify(userData)
+      );
+    } catch (err) {
+      console.error("Save failed:", err);
+      errorMsg.textContent = "Cannot save account. Storage error.";
       return;
     }
 
-    users.push({ username, password });
-    localStorage.setItem("users", JSON.stringify(users));
-
-    location.href = "index.html";
-  });
-
-});
+    // ไม่ auto login
+    window.location.href = "index.html";
