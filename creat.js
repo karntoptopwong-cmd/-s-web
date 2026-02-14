@@ -1,17 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const form = document.getElementById('signupForm');
-  const errorMsg = document.getElementById('errorMsg');
+  const form = document.getElementById("signupForm");
+  const errorMsg = document.getElementById("errorMsg");
 
-  if (!form) return; // กัน error
+  if (!form || !errorMsg) {
+    console.error("HTML element ไม่ครบ (create)");
+    return;
+  }
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-      if (!username || !password || !confirmPassword) {
+    const username = document.getElementById("username")?.value.trim();
+    const password = document.getElementById("password")?.value;
+    const confirmPassword = document.getElementById("confirmPassword")?.value;
+
+    // ===== validation =====
+    if (!username || !password || !confirmPassword) {
       errorMsg.textContent = "Please fill in all fields.";
       return;
     }
@@ -20,25 +25,26 @@ document.addEventListener("DOMContentLoaded", () => {
       errorMsg.textContent = "Passwords do not match.";
       return;
     }
-      const existingUserRaw = localStorage.getItem(`user_${username}`);
+
+    const userKey = `user_${username}`;
+    const existingUserRaw = localStorage.getItem(userKey);
 
     if (existingUserRaw) {
-      // ✅ กัน JSON เสีย
       try {
         JSON.parse(existingUserRaw);
         errorMsg.textContent = "Username already exists.";
         return;
       } catch {
-        // ข้อมูลพัง → ลบแล้วให้สมัครใหม่
-        localStorage.removeItem(`user_${username}`);
+        // ข้อมูลพัง → ลบทิ้ง
+        localStorage.removeItem(userKey);
       }
     }
 
-    const userData = { username, password };
-      try {
+    // ===== save =====
+    try {
       localStorage.setItem(
-        `user_${username}`,
-        JSON.stringify(userData)
+        userKey,
+        JSON.stringify({ username, password })
       );
     } catch (err) {
       console.error("Save failed:", err);
@@ -46,10 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // ไม่ auto login
+    // ===== redirect =====
     window.location.href = "index.html";
   });
 
-
 });
-
