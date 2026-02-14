@@ -28,8 +28,8 @@
 
 .edit-btn {
     position: absolute;
-    right: 4px;
-    top: 0px;
+    right: 25px;
+    top: 180px;
     padding: 4px 10px;
   font-size: 12px;
     border-radius: 8px;
@@ -47,9 +47,7 @@ form {
 }
 
 /* กลุ่ม ชื่อ-นามสกุล + Edit */
-.field-with-edit {
-    margin-top: 20px; /* ดันลงจากด้านบน */
-}
+
 
 /* label ของทุกช่อง */
 label {
@@ -105,4 +103,5 @@ input {
   color: gray;
   font-size: 12px;
 }
+
 
