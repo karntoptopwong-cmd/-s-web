@@ -79,6 +79,20 @@ document.addEventListener("DOMContentLoaded", () => {
         )
       `;
     });
+      // ===== โหลดคะแนนของผู้ใช้ =====
+  async function loadMyScore() {
+    const res = await fetch("https://arduino-api-sain.onrender.com/score");
+    const data = await res.json();
+
+    const score = data[session.username] ?? 0;
+
+    document.getElementById("myScore").innerText = score;
+  }
+
+  loadMyScore();
+  setInterval(loadMyScore, 2000);
+
   }
 
 });
+
