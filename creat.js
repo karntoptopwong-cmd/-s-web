@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+
   const form = document.getElementById("signupForm");
   const errorMsg = document.getElementById("errorMsg");
 
@@ -7,13 +8,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
-    const confirm = document.getElementById("confirmPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
-    if (password !== confirm) {
+    if (!username || !password || !confirmPassword) {
+      errorMsg.textContent = "กรุณากรอกข้อมูลให้ครบ";
+      return;
+    }
+
+    if (password !== confirmPassword) {
       errorMsg.textContent = "Passwords do not match";
       return;
     }
 
+    // ✅ ใช้ users ตัวเดียวทั้งเว็บ
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
     if (users.find(u => u.username === username)) {
@@ -26,4 +33,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     location.href = "index.html";
   });
+
 });
