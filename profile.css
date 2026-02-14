@@ -96,7 +96,7 @@ input {
 }
 
 .required {
-  color: red;
+  color: gray;
   font-size: 12px;
 }
 
@@ -116,4 +116,5 @@ input {
   z-index: 999;
   transition: background 0.05s linear;
 }
+
 
