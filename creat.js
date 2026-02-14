@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const form = document.getElementById('signupForm');
   const errorMsg = document.getElementById('errorMsg');
-  const mouseLight = document.getElementById("mouse-light");
 
   if (!form) return; // กัน error
 
@@ -51,17 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "index.html";
   });
 
-  // ===== Mouse Light Effect =====
-  if (mouseLight) {
-    document.addEventListener("mousemove", (e) => {
-      mouseLight.style.background = `
-        radial-gradient(
-          circle at ${e.clientX}px ${e.clientY}px,
-          rgba(255, 255, 255, 0.2),
-          rgba(0, 0, 0, 0.6) 40%
-        )
-      `;
-    });
-  }
 
 });
+
