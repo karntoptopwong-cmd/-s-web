@@ -94,6 +94,13 @@ input {
 .save-btn.active:hover {
   background: #005fa3;
 }
+
+.required {
+  color: red;
+  font-size: 12px;
+}
+
+
 #mouse-light {
   position: fixed;
   top: 0;
@@ -109,3 +116,4 @@ input {
   z-index: 999;
   transition: background 0.05s linear;
 }
+
