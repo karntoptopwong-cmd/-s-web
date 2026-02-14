@@ -1,5 +1,6 @@
 
     .login-container {
+        position: relative;
       background: white;
       padding: 30px;
       border-radius: 8px;
@@ -46,8 +47,3 @@
       text-decoration: underline;
 
     }
-
-
-
-
-
