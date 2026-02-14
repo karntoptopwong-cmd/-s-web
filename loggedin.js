@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const sidebar = document.getElementById("sidebar");
   const profileArea = document.getElementById("profileArea");
   const historyBtn = document.getElementById("historyBtn");
-  const mouseLight = document.getElementById("mouse-light");
 
   if (!welcomeMsg || !pointsDisplay || !logoutBtn || !menuBtn || !sidebar) {
     console.error("HTML element ไม่ครบ");
@@ -68,31 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "index.html";
   });
 
-  // ===== Mouse Light =====
-  if (mouseLight) {
-    document.addEventListener("mousemove", (e) => {
-      mouseLight.style.background = `
-        radial-gradient(
-          circle at ${e.clientX}px ${e.clientY}px,
-          rgba(255, 255, 255, 0.2),
-          rgba(0, 0, 0, 0.6) 40%
-        )
-      `;
-    });
-      // ===== โหลดคะแนนของผู้ใช้ =====
-  async function loadMyScore() {
-    const res = await fetch("https://arduino-api-sain.onrender.com/score");
-    const data = await res.json();
 
-    const score = data[session.username] ?? 0;
-
-    document.getElementById("myScore").innerText = score;
-  }
-
-  loadMyScore();
-  setInterval(loadMyScore, 2000);
-
-  }
 
 });
+
 
