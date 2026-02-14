@@ -16,6 +16,22 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // 🔹 โหลด users ทั้งหมด
+    const users = JSON.parse(localStorage.getItem("users")) || {};
+
+    // ❌ ไม่มีบัญชีนี้
+    if (!users[username]) {
+      errorMsg.textContent = "ไม่มีบัญชีผู้ใช้นี้";
+      return;
+    }
+
+    // ❌ รหัสผ่านผิด
+    if (users[username].password !== password) {
+      errorMsg.textContent = "รหัสผ่านไม่ถูกต้อง";
+      return;
+    }
+
+    // ✅ ผ่านจริง → ค่อยสร้าง session
     localStorage.setItem("session", JSON.stringify({
       username,
       expireAt: Date.now() + 24 * 60 * 60 * 1000
