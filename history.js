@@ -6,47 +6,55 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  const historyList = document.getElementById("historyList");
   const menuBtn = document.getElementById("menuBtn");
   const sidebar = document.getElementById("sidebar");
   const logoutBtn = document.getElementById("logoutBtn");
-  const historyList = document.getElementById("historyList");
   const mouseLight = document.getElementById("mouse-light");
 
-  // ☰ menu
+  // ===== Menu =====
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
   });
 
-  // logout
+  // ===== Logout =====
   logoutBtn.addEventListener("click", () => {
     localStorage.removeItem("currentUser");
     window.location.href = "index.html";
   });
- // ===== Load History =====
-const raw = localStorage.getItem("history");
-const historyData = raw ? JSON.parse(raw) : [];
 
-if (historyData.length === 0) {
-  historyList.innerHTML = "<p>ยังไม่มีประวัติ</p>";
-  return;
-}
+  // ===== Load history =====
+  const historyKey = `history_${username}`;
+  let historyData = [];
 
-historyData.reverse().forEach(item => {
-  const card = document.createElement("div");
-  card.className = "history-card";
-  card.innerHTML = `
-    <p><strong>User:</strong> ${item.user}</p>
-    <p><strong>Time:</strong> ${item.time}</p>
-  `;
-  historyList.appendChild(card);
-});
+  try {
+    historyData = JSON.parse(localStorage.getItem(historyKey)) || [];
+  } catch {
+    historyData = [];
+  }
 
-  // mouse light
+  if (historyData.length === 0) {
+    historyList.innerHTML = "<p>ยังไม่มีประวัติ</p>";
+    return;
+  }
+
+  historyData.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "history-card";
+    card.innerHTML = `
+      <p><strong>Date:</strong> ${item.date}</p>
+      <p><strong>Time:</strong> ${item.time}</p>
+      <p><strong>Points:</strong> ${item.points}</p>
+    `;
+    historyList.appendChild(card);
+  });
+
+  // ===== Mouse light =====
   document.addEventListener("mousemove", (e) => {
     mouseLight.style.background = `
       radial-gradient(
         circle at ${e.clientX}px ${e.clientY}px,
-        rgba(255,255,255,0.25),
+        rgba(255,255,255,0.15),
         rgba(0,0,0,0.6) 40%
       )
     `;
