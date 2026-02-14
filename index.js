@@ -10,13 +10,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  loginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
     const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
 
-    // logic login ของคุณ
-  });
+    window.location.href = "loggedin.html";
+});
 
 });
+
