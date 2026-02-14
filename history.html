@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>History</title>
   <link rel="stylesheet" href="history.css">
 </head>
 <body>
 
-  <!-- ☰ menu -->
+  <!-- ☰ Menu button -->
   <button id="menuBtn" class="menu-btn">☰</button>
+
+  <!-- Main Content -->
+  <div class="content">
+    <h1>History</h1>
+
+    <div id="historyList" class="history-list">
+      <!-- history cards -->
+    </div>
+  </div>
 
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
+
     <div class="profile-area" onclick="location.href='profile.html'">
       <div class="avatar"></div>
-      <span>Profile</span>
+      <span class="profile-text">Profile</span>
     </div>
 
     <div class="menu-list">
       <button onclick="location.href='loggedin.html'">Home</button>
       <button onclick="location.href='profile.html'">Profile</button>
       <button onclick="location.href='history.html'">History</button>
-      <button id="logoutBtn">Log out</button>
-    </div>
-  </div>
-
-  <!-- ===== Card (เหมือน profile) ===== -->
-  <div class="profile-card">
-    <h2>History</h2>
-
-    <div id="historyList" class="history-list">
-      <!-- history cards -->
+      <button id="logoutBtn">Log Out</button>
     </div>
 
-    <a href="loggedin.html" class="back-btn">Back</a>
   </div>
 
+  <!-- Mouse light -->
   <div id="mouse-light"></div>
 
   <script src="history.js"></script>
