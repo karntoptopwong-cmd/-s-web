@@ -1,9 +1,5 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
-      
+
       font-family: Arial, sans-serif;
       background-color: #ffffff;
       display: flex;
@@ -72,5 +68,3 @@ body {
   z-index: 999;
   transition: background 0.05s linear;
 }
-
-
