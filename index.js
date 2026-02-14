@@ -1,24 +1,59 @@
-document.getElementById("loginForm").addEventListener("submit", function (e) {
-  e.preventDefault(); // 🔥 ถ้าไม่มีบรรทัดนี้ = ไม่ไปแน่นอน
+document.addEventListener("DOMContentLoaded", () => {
 
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const error = document.getElementById("error");
+  const form = document.getElementById("loginForm");
+  const errorMsg = document.getElementById("errorMsg");
+  const mouseLight = document.getElementById("mouse-light");
 
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+if (!form) return; 
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+errorMsg.textContent = ""; // ข้อ 7: clear error ทุกครั้ง
 
-  const foundUser = users.find(
-    u => u.username === username && u.password === password
-  );
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
 
-  if (!foundUser) {
-    error.textContent = "ไม่พบผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
-    return;
+    const userData = localStorage.getItem(`user_${username}`);
+
+@@ -20,35 +22,43 @@
+    }
+
+    let parsedUser;
+try {
+parsedUser = JSON.parse(userData); 
+    } catch (err) {
+console.error("User data corrupted:", err);
+      errorMsg.textContent = "User data corrupted. Please register again.";
+      localStorage.removeItem(`user_${username}`);
+      return;
+    }
+if (password !== parsedUser.password) {
+      errorMsg.textContent = "Invalid username or password.";
+      return;
+    }
+
+    const session = {
+      userId: username,                
+      token: crypto.randomUUID(),
+      expireAt: Date.now() + 1000 * 60 * 60 // 1 ชั่วโมง
+    };
+
+    localStorage.setItem("session", JSON.stringify(session));
+    localStorage.setItem("currentUser", username);
+
+    window.location.href = "loggedin.html";
+  });
+
+  // ===== Mouse Light Effect =====
+  if (mouseLight) {
+    document.addEventListener("mousemove", (e) => {
+      mouseLight.style.background = `
+        radial-gradient(
+          circle at ${e.clientX}px ${e.clientY}px,
+          rgba(255, 255, 255, 0.2),
+          rgba(0, 0, 0, 0.6) 40%
+        )
+      `;
+    });
   }
 
-  // ✅ สร้าง session
-  sessionStorage.setItem("sessionUser", username);
-
-  // ✅ ไปหน้า loggedin
-  window.location.href = "loggedin.html";
 });
