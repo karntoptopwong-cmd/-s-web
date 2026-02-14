@@ -1,38 +1,39 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
   <title>Logged In</title>
+  <link rel="stylesheet" href="loggedin.css">
 </head>
 <body>
 
-<button id="menuBtn">☰</button>
+  <!-- ☰ -->
+  <button id="menuBtn" class="menu-btn">☰</button>
 
-<h2 id="welcome"></h2>
+  <!-- Content -->
+  <div class="content">
+    <h1 id="welcomeMsg"></h1>
+    <p id="points"></p>
+    <button id="logoutBtn">Log Out</button>
+  </div>
 
-<button id="logout">Log Out</button>
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
 
-<div id="sidebar" style="display:none;">
-  <p>Sidebar Menu</p>
-</div>
+    <!-- Profile Section -->
+    <div id="profileArea" class="profile-area">
+      <div class="avatar"></div>
+      <span class="profile-text">Profile</span>
+    </div>
 
-<script src="js/auth.js"></script>
-<script>
-  // welcome username
-  const user = sessionStorage.getItem("sessionUser");
-  document.getElementById("welcome").textContent = `Welcome ${user}`;
+    <!-- Menu -->
+    <div class="menu-list">
+      <button id="historyBtn">History</button>
 
-  // sidebar
-  document.getElementById("menuBtn").onclick = () => {
-    const sb = document.getElementById("sidebar");
-    sb.style.display = sb.style.display === "block" ? "none" : "block";
-  };
+      <button>Help</button>
+    </div>
 
-  // logout
-  document.getElementById("logout").onclick = () => {
-    sessionStorage.clear();
-    window.location.href = "index.html";
-  };
-</script>
+  </div>
+
+  <div id="mouse-light"></div>
+
+  <script src="loggedin.js"></script>
 </body>
 </html>
