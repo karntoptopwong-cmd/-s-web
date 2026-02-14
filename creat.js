@@ -1,59 +1,36 @@
-document.addEventListener("DOMContentLoaded", () => {
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-  const form = document.getElementById("signupForm");
-  const errorMsg = document.getElementById("errorMsg");
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
 
-  if (!form || !errorMsg) {
-    console.error("HTML element ไม่ครบ (create)");
+  if (!username || !password || !confirmPassword) {
+    errorMsg.textContent = "Please fill in all fields.";
     return;
   }
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  if (password !== confirmPassword) {
+    errorMsg.textContent = "Passwords do not match.";
+    return;
+  }
 
-    const username = document.getElementById("username")?.value.trim();
-    const password = document.getElementById("password")?.value;
-    const confirmPassword = document.getElementById("confirmPassword")?.value;
+  // 🔹 โหลด users ทั้งหมด
+  const users = JSON.parse(localStorage.getItem("users")) || {};
 
-    // ===== validation =====
-    if (!username || !password || !confirmPassword) {
-      errorMsg.textContent = "Please fill in all fields.";
-      return;
-    }
+  // 🔹 เช็กซ้ำ
+  if (users[username]) {
+    errorMsg.textContent = "Username already exists.";
+    return;
+  }
 
-    if (password !== confirmPassword) {
-      errorMsg.textContent = "Passwords do not match.";
-      return;
-    }
+  // 🔹 เพิ่ม user ใหม่
+  users[username] = {
+    password
+  };
 
-    const userKey = `user_${username}`;
-    const existingUserRaw = localStorage.getItem(userKey);
+  localStorage.setItem("users", JSON.stringify(users));
 
-    if (existingUserRaw) {
-      try {
-        JSON.parse(existingUserRaw);
-        errorMsg.textContent = "Username already exists.";
-        return;
-      } catch {
-        // ข้อมูลพัง → ลบทิ้ง
-        localStorage.removeItem(userKey);
-      }
-    }
-
-    // ===== save =====
-    try {
-      localStorage.setItem(
-        userKey,
-        JSON.stringify({ username, password })
-      );
-    } catch (err) {
-      console.error("Save failed:", err);
-      errorMsg.textContent = "Cannot save account. Storage error.";
-      return;
-    }
-
-    // ===== redirect =====
-    window.location.href = "index.html";
-  });
-
+  // 🔹 กลับไปหน้า login
+  window.location.href = "index.html";
 });
