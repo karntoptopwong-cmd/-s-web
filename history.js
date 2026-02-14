@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
   const profileBtn = document.getElementById("profileBtn");
   const helpBtn = document.getElementById("helpBtn");
-  const mouseLight = document.getElementById("mouse-light");
   /* sidebar */
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
@@ -46,9 +45,4 @@ document.addEventListener("DOMContentLoaded", () => {
       historyList.appendChild(div);
     });
   }
-  /* mouse light */
-  document.addEventListener("mousemove", (e) => {
-    mouseLight.style.background = `
-      radial-gradient(
-        circle at ${e.clientX}px ${e.clientY}px,
-        rgba(255,255,255,0.18),        rgba(0,0,0,0.65) 40%      )    `;  });
+  
