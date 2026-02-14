@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
+    const mouseLight = document.getElementById("mouse-light");
 
     if (!username || !password) {
       errorMsg.textContent = "กรุณากรอกข้อมูลให้ครบ";
@@ -41,5 +42,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     localStorage.setItem("session", JSON.stringify(session));
     window.location.href = "loggedin.html";
+
+    document.addEventListener("mousemove", (e) => {
+  mouseLight.style.background = `
+    radial-gradient(
+      circle at ${e.clientX}px ${e.clientY}px,
+      rgba(255, 255, 255, 0.2),
+      rgba(0, 0, 0, 0.7) 40%
+    )
+  `;
+});
+
+    
   });
 });
+
