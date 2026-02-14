@@ -14,43 +14,36 @@
 
     <h2 id="usernameDisplay"></h2>
 
-   <form id="profileForm">
+    <form id="profileForm">
 
-  <div class="field-with-edit">
-    <label>ชื่อ - นามสกุล</label>
+        <div class="field-with-edit">
+            <label>ชื่อ - นามสกุล <span class="required">(จำเป็น)</span></label>
+            <button type="button" id="editBtn" class="edit-btn">✏️ Edit</button>
+            <input type="text" id="fullname" disabled required>
+        </div>
 
-    <button type="button" id="editBtn" class="edit-btn">✏️ Edit</button>
+        <label>ชั้น <span class="required">(จำเป็น)</span></label>
+        <input type="text" id="class" disabled required>
 
-    <input type="text" id="fullname" disabled required>
-  </div>
+        <label>เลขที่ <span class="required">(จำเป็น)</span></label>
+        <input type="text" id="number" disabled required>
 
-  <label>ชั้น</label>
-  <input type="text" id="class" disabled required>
+        <label>อีเมล <span class="required">(จำเป็น)</span></label>
+        <input type="email" id="email" disabled required>
 
-  <label>เลขที่</label>
-  <input type="text" id="number" disabled required>
+        <label>เบอร์โทร</label>
+        <input type="tel" id="phone" disabled>
 
-  <label>อีเมล</label>
-  <input type="email" id="email" disabled required>
+        <button type="submit" id="saveBtn" class="save-btn" disabled>Save</button>
+    </form>
 
-  <label>เบอร์โทร</label>
-  <input type="tel" id="phone" disabled>
-
-  <button type="submit" id="saveBtn" class="save-btn" disabled>Save</button>
-</form>
-
-    <a href="loggedin.html" class="back-btn">Back</a>
+    <!-- เปลี่ยน Back → Home -->
+    <a href="loggedin.html" class="back-btn">Home</a>
 
 </div>
 
 <div id="mouse-light"></div>
-    
-<script src="profile.js"></script>
 
+<script src="profile.js"></script>
 </body>
 </html>
-
-
-
-
-
