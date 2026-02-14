@@ -1,6 +1,8 @@
 
 .field-with-edit {
   position: relative;
+  margin-top: 20px;
+    padding-top: 22px; 
 }
 
 .profile-card {
@@ -26,9 +28,10 @@
 
 .edit-btn {
     position: absolute;
-    right: 5px;
-    top: 60px;
-    padding: 6px 12px;
+    right: 4px;
+    top: 0px;
+    padding: 4px 10px;
+  font-size: 12px;
     border-radius: 8px;
     cursor: pointer;
     z-index: 10;
@@ -102,3 +105,4 @@ input {
   color: gray;
   font-size: 12px;
 }
+
