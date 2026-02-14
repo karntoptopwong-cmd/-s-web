@@ -1,11 +1,12 @@
+import { requireAuth, logout } from "./auth.js";
+
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ===== ตรวจ login =====
-  const username = localStorage.getItem("currentUser");
-  if (!username) {
-    location.href = "index.html";
-    return;
-  }
+  // ===== AUTH (ศูนย์กลาง) =====
+  const session = requireAuth();
+  if (!session) return;
+
+  const username = session.username;
 
   // ===== element =====
   const historyList = document.getElementById("historyList");
@@ -15,27 +16,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileArea = document.getElementById("profileArea");
   const helpBtn = document.getElementById("helpBtn");
 
+  if (!historyList || !menuBtn || !sidebar || !logoutBtn) {
+    console.error("HTML element ไม่ครบ");
+    return;
+  }
+
   // ===== sidebar toggle =====
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
   });
 
   // ===== navigation =====
-  profileArea.addEventListener("click", () => {
+  profileArea?.addEventListener("click", () => {
     location.href = "profile.html";
   });
 
-  helpBtn.addEventListener("click", () => {
+  helpBtn?.addEventListener("click", () => {
     location.href = "help.html";
   });
 
-  logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("session"); // เผื่อใช้ระบบ session
-    location.href = "index.html";
-  });
+  // ===== logout (ใช้ auth.js เท่านั้น) =====
+  logoutBtn.addEventListener("click", logout);
 
-  // ===== load history =====
+  // ===== load history (localStorage ชั่วคราว) =====
   const historyKey = `history_${username}`;
   let historyData = [];
 
@@ -49,6 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
     historyList.innerHTML = "<p>ยังไม่มีประวัติ</p>";
     return;
   }
+
+  historyList.innerHTML = "";
 
   historyData.forEach(item => {
     const div = document.createElement("div");
