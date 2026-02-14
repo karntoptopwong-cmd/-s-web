@@ -22,27 +22,7 @@
       <div class="avatar"></div>
       <span class="profile-text">Profile</span>
     </div>
-    <script>
-function login(){
-
-    // ✅ บันทึกเวลา
-    let historyData = JSON.parse(localStorage.getItem("history")) || [];
-
-    const now = new Date();
-    const formatted =
-        "เข้าใช้งานเมื่อ " +
-        now.toLocaleDateString("th-TH") + " " +
-        now.toLocaleTimeString("th-TH");
-
-    historyData.unshift(formatted);
-    localStorage.setItem("history", JSON.stringify(historyData));
-
-    // ✅ เปลี่ยนหน้าไป loggedin
-    window.location.href = "loggedin.html";
-}
-    </script>
     
-
     <!-- Menu -->
     <div class="menu-list">
       <button>Settings</button>
@@ -58,3 +38,4 @@ function login(){
   <script src="loggedin.js"></script>
 </body>
 </html>
+
