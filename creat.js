@@ -1,7 +1,18 @@
-const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
+document.addEventListener("DOMContentLoaded", () => {
 
-    if (!username || !password || !confirmPassword) {
+  const form = document.getElementById('signupForm');
+  const errorMsg = document.getElementById('errorMsg');
+  const mouseLight = document.getElementById("mouse-light");
+
+  if (!form) return; // กัน error
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+      if (!username || !password || !confirmPassword) {
       errorMsg.textContent = "Please fill in all fields.";
       return;
     }
@@ -10,11 +21,7 @@ const password = document.getElementById('password').value;
       errorMsg.textContent = "Passwords do not match.";
       return;
     }
-
-    if (localStorage.getItem(`user_${username}`)) {
-      errorMsg.textContent = "Username already exists.";
-      return;
-    const existingUserRaw = localStorage.getItem(`user_${username}`);
+      const existingUserRaw = localStorage.getItem(`user_${username}`);
 
     if (existingUserRaw) {
       // ✅ กัน JSON เสีย
@@ -29,12 +36,7 @@ const password = document.getElementById('password').value;
     }
 
     const userData = { username, password };
-
-    localStorage.setItem(
-      `user_${username}`,
-      JSON.stringify(userData)
-    );
-    try {
+      try {
       localStorage.setItem(
         `user_${username}`,
         JSON.stringify(userData)
@@ -47,3 +49,19 @@ const password = document.getElementById('password').value;
 
     // ไม่ auto login
     window.location.href = "index.html";
+  });
+
+  // ===== Mouse Light Effect =====
+  if (mouseLight) {
+    document.addEventListener("mousemove", (e) => {
+      mouseLight.style.background = `
+        radial-gradient(
+          circle at ${e.clientX}px ${e.clientY}px,
+          rgba(255, 255, 255, 0.2),
+          rgba(0, 0, 0, 0.6) 40%
+        )
+      `;
+    });
+  }
+
+});
