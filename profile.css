@@ -26,13 +26,14 @@
 
 /* 🔹 แก้: edit-btn อ้างอิงจาก header */
 .edit-btn {
-    position: absolute;
-    right: 0;
-    top: 220;
-    padding: 4px 10px;
-    font-size: 12px;
-    border-radius: 8px;
-    cursor: pointer;
+    position: relative;   /* ⬅ ไม่ลอยแล้ว */
+  display: block;
+  margin-left: auto;    /* ดันไปขวา */
+  margin-bottom: 15px;  /* ระยะห่างจากช่องถัดไป */
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 /* form */
@@ -74,4 +75,5 @@ input {
     color: gray;
     font-size: 12px;
 }
+
 
