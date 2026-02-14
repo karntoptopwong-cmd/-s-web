@@ -1,4 +1,4 @@
-import { requireAuth, logout } from "./auth.js";
+import { requireAuth } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const session = requireAuth();
@@ -7,17 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const username = session.username;
 
   const usernameDisplay = document.getElementById("usernameDisplay");
-  const logoutBtn = document.getElementById("logoutBtn");
-
   if (usernameDisplay) {
     usernameDisplay.textContent = username;
   }
 
-  logoutBtn?.addEventListener("click", logout);
-
   const profileForm = document.getElementById("profileForm");
   const fullname = document.getElementById("fullname");
-  const classInput = document.getElementById("className");
+  const classInput = document.getElementById("class");
   const numberInput = document.getElementById("number");
   const email = document.getElementById("email");
   const phone = document.getElementById("phone");
@@ -32,7 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   try {
     data = JSON.parse(localStorage.getItem(key)) || {};
-  } catch {}
+  } catch {
+    console.error("ข้อมูลใน localStorage ไม่ใช่ JSON");
+  }
 
   fullname.value = data.fullname || "";
   classInput.value = data.class || "";
@@ -43,13 +41,16 @@ document.addEventListener("DOMContentLoaded", () => {
   profileForm.addEventListener("submit", e => {
     e.preventDefault();
 
-    localStorage.setItem(key, JSON.stringify({
-      fullname: fullname.value,
-      class: classInput.value,
-      number: numberInput.value,
-      email: email.value,
-      phone: phone.value
-    }));
+    localStorage.setItem(
+      key,
+      JSON.stringify({
+        fullname: fullname.value,
+        class: classInput.value,
+        number: numberInput.value,
+        email: email.value,
+        phone: phone.value
+      })
+    );
 
     alert("บันทึกข้อมูลเรียบร้อยแล้ว");
   });
