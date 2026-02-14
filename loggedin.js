@@ -2,50 +2,52 @@ import { requireAuth, logout } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // 🔐 เช็ก session กลาง
+  // =============================
+  // 🔐 1) ตรวจสอบ session
+  // =============================
   const session = requireAuth();
   if (!session) return;
 
   const username = session.username;
 
-  // ===== DOM =====
   const welcomeMsg = document.getElementById("welcomeMsg");
   const pointsDisplay = document.getElementById("points");
-  const logoutBtn = document.getElementById("logoutBtn");
 
   const menuBtn = document.getElementById("menuBtn");
   const sidebar = document.getElementById("sidebar");
+
   const profileArea = document.getElementById("profileArea");
   const historyBtn = document.getElementById("historyBtn");
+  const helpBtn = document.getElementById("helpBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
 
-  if (!welcomeMsg || !pointsDisplay || !logoutBtn || !menuBtn || !sidebar) {
+  if (!welcomeMsg || !pointsDisplay || !menuBtn || !sidebar || !logoutBtn) {
     console.error("HTML element ไม่ครบ");
     return;
   }
 
-  // ===== Welcome =====
   welcomeMsg.textContent = `Welcome to the home page, ${username}`;
 
-  // ===== Points (local หรือ backend ก็ได้) =====
   const pointKey = `points_${username}`;
-  let points = Number(localStorage.getItem(pointKey)) || 0;
+  const points = Number(localStorage.getItem(pointKey)) || 0;
   pointsDisplay.textContent = `Points: ${points}`;
 
-  // ===== Menu =====
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
   });
 
-  // ===== Navigation =====
   profileArea?.addEventListener("click", () => {
     location.href = "profile.html";
   });
-
+  
   historyBtn?.addEventListener("click", () => {
     location.href = "history.html";
   });
 
-  // ===== Logout (ใช้ของ auth.js) =====
+  helpBtn?.addEventListener("click", () => {
+    location.href = "help.html";
+  });
+
   logoutBtn.addEventListener("click", logout);
 
 });
