@@ -1,1 +1,48 @@
+body {
+  background: #eef4ff;
+  font-family: Arial, sans-serif;
+}
 
+/* กล่องกลาง */
+.help-card {
+  width: 420px;
+  background: #fff;
+  margin: 100px auto;
+  padding: 40px 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+/* ข้อความ */
+.help-text {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+/* ปุ่ม Home */
+.home-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #0078d7;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.home-btn:hover {
+  background: #005fa3;
+}
+
+/* mouse light */
+#mouse-light {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    rgba(255,255,255,0.15),
+    rgba(0,0,0,0.6) 40%
+  );
+  z-index: 9999;
+}
