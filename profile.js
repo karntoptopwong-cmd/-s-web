@@ -1,23 +1,27 @@
-document.addEventListener("DOMContentLoaded", () => {
+import { requireAuth, logout } from "./auth.js";
 
-  const session = getSession();
-  if (!session) {
-    location.href = "index.html";
-    return;
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  const session = requireAuth();
+  if (!session) return;
 
   const username = session.username;
-  document.getElementById("usernameDisplay").textContent = username;
 
-  // 🔹 ดึง element จาก HTML ให้ครบ
+  const usernameDisplay = document.getElementById("usernameDisplay");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (usernameDisplay) {
+    usernameDisplay.textContent = username;
+  }
+
+  logoutBtn?.addEventListener("click", logout);
+
   const profileForm = document.getElementById("profileForm");
   const fullname = document.getElementById("fullname");
-  const classInput = document.getElementById("class");
+  const classInput = document.getElementById("className");
   const numberInput = document.getElementById("number");
   const email = document.getElementById("email");
   const phone = document.getElementById("phone");
 
-  // 🔹 กัน error ถ้า HTML ขาด
   if (!profileForm || !fullname || !classInput || !numberInput || !email || !phone) {
     console.error("Profile HTML element ไม่ครบ");
     return;
@@ -28,18 +32,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   try {
     data = JSON.parse(localStorage.getItem(key)) || {};
-  } catch {
-    data = {};
-  }
+  } catch {}
 
-  // 🔹 ใส่ข้อมูลลงฟอร์ม
   fullname.value = data.fullname || "";
   classInput.value = data.class || "";
   numberInput.value = data.number || "";
   email.value = data.email || "";
   phone.value = data.phone || "";
 
-  // 🔹 save
   profileForm.addEventListener("submit", e => {
     e.preventDefault();
 
@@ -53,5 +53,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     alert("บันทึกข้อมูลเรียบร้อยแล้ว");
   });
-
 });
