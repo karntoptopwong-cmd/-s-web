@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+
   const form = document.getElementById("loginForm");
   const errorMsg = document.getElementById("errorMsg");
   const mouseLight = document.getElementById("mouse-light");
@@ -9,7 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
 
+    if (!username || !password) {
+      errorMsg.textContent = "กรุณากรอกข้อมูลให้ครบ";
+      return;
+    }
+
     const users = JSON.parse(localStorage.getItem("users")) || [];
+
     const user = users.find(
       u => u.username === username && u.password === password
     );
@@ -19,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // ✅ สร้าง session
     createSession(username);
     location.href = "loggedin.html";
   });
@@ -33,4 +41,5 @@ document.addEventListener("DOMContentLoaded", () => {
       )
     `;
   });
+
 });
