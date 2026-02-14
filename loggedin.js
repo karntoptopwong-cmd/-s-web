@@ -1,40 +1,34 @@
-// =======================
-// Auth
-// =======================
-const session = getSession();
+document.addEventListener("DOMContentLoaded", () => {
 
-// welcome username
-document.getElementById("welcome").innerText =
-  `Welcome ${session.username}`;
+  const session = requireAuth();
+  if (!session) return;
 
-// =======================
-// Sidebar Toggle
-// =======================
-const menuBtn = document.getElementById("menuBtn");
-const sidebar = document.getElementById("sidebar");
+  const welcomeMsg = document.getElementById("welcomeMsg");
+  const menuBtn = document.getElementById("menuBtn");
+  const sidebar = document.getElementById("sidebar");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const historyBtn = document.getElementById("historyBtn");
+  const mouseLight = document.getElementById("mouse-light");
 
-menuBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("active");
-});
+  welcomeMsg.textContent = `Welcome ${session.username}`;
 
-// =======================
-// Logout
-// =======================
-document
-  .getElementById("logoutBtn")
-  .addEventListener("click", logout);
+  menuBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+  });
 
-// =======================
-// Mouse Light Effect
-// =======================
-const mouseLight = document.getElementById("mouse-light");
+  historyBtn.addEventListener("click", () => {
+    location.href = "history.html";
+  });
 
-document.addEventListener("mousemove", (e) => {
-  mouseLight.style.background = `
-    radial-gradient(
-      circle at ${e.clientX}px ${e.clientY}px,
-      rgba(255,255,255,0.25),
-      rgba(0,0,0,0.7) 40%
-    )
-  `;
+  logoutBtn.addEventListener("click", logout);
+
+  document.addEventListener("mousemove", (e) => {
+    mouseLight.style.background = `
+      radial-gradient(
+        circle at ${e.clientX}px ${e.clientY}px,
+        rgba(255,255,255,0.2),
+        rgba(0,0,0,0.6) 40%
+      )
+    `;
+  });
 });
