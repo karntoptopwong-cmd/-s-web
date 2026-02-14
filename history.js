@@ -1,65 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const username = localStorage.getItem("currentUser");
-  if (!username) {
-    window.location.href = "index.html";
+  const session = getSession();
+  if (!session) {
+    location.href = "index.html";
     return;
   }
 
+  const username = session.username;
   const historyList = document.getElementById("historyList");
-  const menuBtn = document.getElementById("menuBtn");
-  const sidebar = document.getElementById("sidebar");
-  const logoutBtn = document.getElementById("logoutBtn");
-  const helpBtn = document.getElementById("helpBtn");
-  const mouseLight = document.getElementById("mouse-light");
 
-  /* sidebar */
-  menuBtn.addEventListener("click", () => {
-    sidebar.classList.toggle("open");
-  });
-
- const profileArea = document.getElementById("profileArea");
-
-profileArea.addEventListener("click", () => {
-  location.href = "profile.html";
-});
-
-
-  helpBtn.addEventListener("click", () => {
-    location.href = "help.html";
-  });
-
-  logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("currentUser");
-    location.href = "index.html";
-  });
-
-  /* load history */
-  const historyKey = `history_${username}`;
-  const historyData = JSON.parse(localStorage.getItem(historyKey)) || [];
-
-  if (historyData.length === 0) {
-    historyList.innerHTML = "<p>ยังไม่มีประวัติ</p>";
-  } else {
-    historyData.forEach(item => {
-      const div = document.createElement("div");
-      div.className = "history-item";
-      div.innerHTML = `
-        <strong>${item.date}</strong><br>
-        คะแนน: ${item.points}
-      `;
-      historyList.appendChild(div);
-    });
+  let history = [];
+  try {
+    history = JSON.parse(localStorage.getItem(`history_${username}`)) || [];
+  } catch {
+    history = [];
   }
 
-  /* mouse light */
-  document.addEventListener("mousemove", (e) => {
-    mouseLight.style.background = `
-      radial-gradient(
-        circle at ${e.clientX}px ${e.clientY}px,
-        rgba(255,255,255,0.18),
-        rgba(0,0,0,0.65) 40%
-      )
-    `;
+  if (history.length === 0) {
+    historyList.innerHTML = "<p>ยังไม่มีประวัติ</p>";
+    return;
+  }
+
+  history.forEach(h => {
+    const div = document.createElement("div");
+    div.className = "history-item";
+    div.innerHTML = `<b>${h.date}</b><br>คะแนน: ${h.points}`;
+    historyList.appendChild(div);
   });
 });
