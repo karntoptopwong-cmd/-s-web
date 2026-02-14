@@ -1,39 +1,28 @@
-document.addEventListener("DOMContentLoaded", () => {
+// index.js
+loginForm.addEventListener("submit", async e => {
+  e.preventDefault();
 
-  const loginForm = document.getElementById("loginForm");
-  const errorMsg = document.getElementById("errorMsg");
+  const username = usernameInput.value;
+  const password = passwordInput.value;
 
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
-
-    if (!username || !password) {
-      errorMsg.textContent = "กรุณากรอก username และ password";
-      return;
-    }
-
-    // 🔹 ตัวอย่างตรวจสอบแบบง่าย (localStorage / mock)
-    const storedPassword = localStorage.getItem(`user_${username}`);
-
-    if (storedPassword !== password) {
-      errorMsg.textContent = "Username หรือ Password ไม่ถูกต้อง";
-      return;
-    }
-
-    // ✅ สร้าง session (หน้าที่ของหน้า login)
-    const session = {
-      username: username,
-      loginAt: Date.now()
-      // จะเพิ่ม expireAt ทีหลังก็ได้
-    };
-
-    localStorage.setItem("session", JSON.stringify(session));
-    localStorage.setItem("currentUser", username);
-
-    // 👉 ไปหน้า logged in
-    window.location.href = "loggedin.html";
+  const res = await fetch("https://your-backend/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
   });
 
+  if (!res.ok) {
+    errorMsg.textContent = "Login failed";
+    return;
+  }
+
+  const data = await res.json();
+
+  localStorage.setItem("session", JSON.stringify({
+    username: data.username,
+    token: data.token,
+    expireAt: Date.now() + 24 * 60 * 60 * 1000
+  }));
+
+  location.href = "loggedin.html";
 });
