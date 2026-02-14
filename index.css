@@ -72,8 +72,9 @@ body {
     rgba(0, 0, 0, 0.6) 40%
   );
   z-index: 99999;
-  transition: background 0.05s linear;
+  transition: background 0.03s linear;
 }
+
 
 
 
