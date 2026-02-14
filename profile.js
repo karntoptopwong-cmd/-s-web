@@ -9,6 +9,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const username = session.username;
   document.getElementById("usernameDisplay").textContent = username;
 
+  // 🔹 ดึง element จาก HTML ให้ครบ
+  const profileForm = document.getElementById("profileForm");
+  const fullname = document.getElementById("fullname");
+  const classInput = document.getElementById("class");
+  const numberInput = document.getElementById("number");
+  const email = document.getElementById("email");
+  const phone = document.getElementById("phone");
+
+  // 🔹 กัน error ถ้า HTML ขาด
+  if (!profileForm || !fullname || !classInput || !numberInput || !email || !phone) {
+    console.error("Profile HTML element ไม่ครบ");
+    return;
+  }
+
   const key = `profile_${username}`;
   let data = {};
 
@@ -18,22 +32,26 @@ document.addEventListener("DOMContentLoaded", () => {
     data = {};
   }
 
+  // 🔹 ใส่ข้อมูลลงฟอร์ม
   fullname.value = data.fullname || "";
   classInput.value = data.class || "";
-  number.value = data.number || "";
+  numberInput.value = data.number || "";
   email.value = data.email || "";
   phone.value = data.phone || "";
 
-  // save
+  // 🔹 save
   profileForm.addEventListener("submit", e => {
     e.preventDefault();
 
     localStorage.setItem(key, JSON.stringify({
       fullname: fullname.value,
       class: classInput.value,
-      number: number.value,
+      number: numberInput.value,
       email: email.value,
       phone: phone.value
     }));
+
+    alert("บันทึกข้อมูลเรียบร้อยแล้ว");
   });
+
 });
