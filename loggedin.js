@@ -1,7 +1,14 @@
+import { requireAuth, logout } from "./auth.js";
+
 document.addEventListener("DOMContentLoaded", () => {
 
-  const username = localStorage.getItem("currentUser");
+  // 🔐 เช็ก session กลาง
+  const session = requireAuth();
+  if (!session) return;
 
+  const username = session.username;
+
+  // ===== DOM =====
   const welcomeMsg = document.getElementById("welcomeMsg");
   const pointsDisplay = document.getElementById("points");
   const logoutBtn = document.getElementById("logoutBtn");
@@ -16,31 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  if (!username) {
-    window.location.href = "index.html";
-    return;
-  }
-
+  // ===== Welcome =====
   welcomeMsg.textContent = `Welcome to the home page, ${username}`;
 
-  // ===== Points =====
+  // ===== Points (local หรือ backend ก็ได้) =====
   const pointKey = `points_${username}`;
-  let pointsRaw = localStorage.getItem(pointKey);
-  let points = 0;
-
-  if (pointsRaw !== null) {
-    const parsed = Number(pointsRaw);
-    if (!Number.isNaN(parsed) && parsed >= 0) {
-      points = parsed;
-    } else {
-      // ข้อมูลพัง → reset
-      localStorage.setItem(pointKey, 0);
-      points = 0;
-    }
-  } else {
-    localStorage.setItem(pointKey, 0);
-  }
-
+  let points = Number(localStorage.getItem(pointKey)) || 0;
   pointsDisplay.textContent = `Points: ${points}`;
 
   // ===== Menu =====
@@ -49,26 +37,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===== Navigation =====
-  if (profileArea) {
-    profileArea.addEventListener("click", () => {
-      window.location.href = "profile.html";
-    });
-  }
-
-  if (historyBtn) {
-    historyBtn.addEventListener("click", () => {
-      window.location.href = "history.html";
-    });
-  }
-
-  // ===== Logout =====
-  logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("currentUser");
-    window.location.href = "index.html";
+  profileArea?.addEventListener("click", () => {
+    location.href = "profile.html";
   });
 
+  historyBtn?.addEventListener("click", () => {
+    location.href = "history.html";
+  });
 
+  // ===== Logout (ใช้ของ auth.js) =====
+  logoutBtn.addEventListener("click", logout);
 
 });
-
-
