@@ -3,28 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <title>Logged In</title>
-  <link rel="stylesheet" href="loggedin.css">
 </head>
 <body>
 
-<!-- mouse light -->
-<div id="mouse-light"></div>
-
-<!-- menu -->
 <button id="menuBtn">☰</button>
 
-<!-- sidebar -->
-<div id="sidebar" class="sidebar">
-  <button id="logoutBtn">Logout</button>
+<h2 id="welcome"></h2>
+
+<button id="logout">Log Out</button>
+
+<div id="sidebar" style="display:none;">
+  <p>Sidebar Menu</p>
 </div>
 
-<h1 id="welcome"></h1>
-
-<!-- IMPORTANT ORDER -->
-<script src="auth.js"></script>
+<script src="js/auth.js"></script>
 <script>
-  requireLogin();
+  // welcome username
+  const user = sessionStorage.getItem("sessionUser");
+  document.getElementById("welcome").textContent = `Welcome ${user}`;
+
+  // sidebar
+  document.getElementById("menuBtn").onclick = () => {
+    const sb = document.getElementById("sidebar");
+    sb.style.display = sb.style.display === "block" ? "none" : "block";
+  };
+
+  // logout
+  document.getElementById("logout").onclick = () => {
+    sessionStorage.clear();
+    window.location.href = "index.html";
+  };
 </script>
-<script src="loggedin.js"></script>
 </body>
 </html>
