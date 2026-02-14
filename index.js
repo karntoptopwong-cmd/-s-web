@@ -1,28 +1,22 @@
-// index.js
-loginForm.addEventListener("submit", async e => {
-  e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
 
-  const username = usernameInput.value;
-  const password = passwordInput.value;
+  const loginForm = document.getElementById("loginForm");
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+  const errorMsg = document.getElementById("errorMsg");
 
-  const res = await fetch("https://your-backend/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
-  });
-
-  if (!res.ok) {
-    errorMsg.textContent = "Login failed";
+  if (!loginForm) {
+    console.error("loginForm not found");
     return;
   }
 
-  const data = await res.json();
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  localStorage.setItem("session", JSON.stringify({
-    username: data.username,
-    token: data.token,
-    expireAt: Date.now() + 24 * 60 * 60 * 1000
-  }));
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
 
-  location.href = "loggedin.html";
+    // logic login ของคุณ
+  });
+
 });
