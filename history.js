@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuBtn = document.getElementById("menuBtn");
   const sidebar = document.getElementById("sidebar");
   const logoutBtn = document.getElementById("logoutBtn");
-  const profileBtn = document.getElementById("profileBtn");
   const helpBtn = document.getElementById("helpBtn");
   const mouseLight = document.getElementById("mouse-light");
 
@@ -19,9 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
     sidebar.classList.toggle("open");
   });
 
-  profileBtn.addEventListener("click", () => {
-    location.href = "profile.html";
-  });
+ const profileArea = document.getElementById("profileArea");
+
+profileArea.addEventListener("click", () => {
+  location.href = "profile.html";
+});
+
 
   helpBtn.addEventListener("click", () => {
     location.href = "help.html";
