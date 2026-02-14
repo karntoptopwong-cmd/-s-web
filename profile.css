@@ -1,4 +1,4 @@
-.profile-card {
+ .profile-card {
     width: 400px;
     background: #fff;
     margin: 40px auto;
@@ -28,7 +28,7 @@
 .edit-btn {
     position: absolute;
     right: 0;
-    top: 0;
+    top: 220;
     padding: 4px 10px;
     font-size: 12px;
     border-radius: 8px;
@@ -74,3 +74,4 @@ input {
     color: gray;
     font-size: 12px;
 }
+
