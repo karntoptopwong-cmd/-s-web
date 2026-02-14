@@ -11,6 +11,17 @@ body {
   overflow: hidden;
 }
 
+.profile-card {
+    width: 400px;
+    background: #fff;
+    margin: 40px auto;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    position: relative;
+    text-align: center;
+}
+
 /* ☰ */
 .menu-btn {
   position: fixed;
