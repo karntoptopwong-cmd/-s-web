@@ -9,6 +9,7 @@
     box-shadow: 0 10px 20px rgba(0,0,0,0.15);
     position: relative;
     text-align: center;
+    z-index: 1;
 }
 
 /* avatar */
@@ -27,7 +28,7 @@
     padding: 6px 12px;
     border-radius: 8px;
     cursor: pointer;
-    z-index: 10;
+    z-index: 2;
 }
 
 
@@ -96,6 +97,7 @@ input {
   color: gray;
   font-size: 12px;
 }
+
 
 
 
