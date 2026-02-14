@@ -1,110 +1,114 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
 }
 
 body {
-  margin: 0;
-  background: #666;
-  color: #000;
-  height: 100vh;
-  overflow: hidden;
+  background: #eef4ff;
 }
 
-.profile-card {
-    width: 400px;
-    background: #fff;
-    margin: 40px auto;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-    position: relative;
-    text-align: center;
-}
-
-/* ☰ */
+/* ===== menu button ===== */
 .menu-btn {
   position: fixed;
   top: 15px;
-  right: 15px;
-  background: #0a6ed1;
-  color: white;
+  left: 15px;
+  font-size: 26px;
+  background: none;
   border: none;
-  font-size: 22px;
-  padding: 10px 14px;
-  border-radius: 6px;
   cursor: pointer;
   z-index: 1001;
 }
 
-/* Content */
-.content {
-  height: 100vh;
-  overflow-y: auto;
-  padding: 80px 20px 20px;
-}
-
-/* History */
-.history-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.history-card {
-  background: #f2f2f2;
-  border-radius: 10px;
-  padding: 15px;
-}
-
-/* Sidebar */
+/* ===== sidebar ===== */
 .sidebar {
   position: fixed;
   top: 0;
-  right: -280px;
-  width: 280px;
+  left: -220px;
+  width: 220px;
   height: 100%;
-  background: #fff;
+  background: #222;
+  padding: 20px;
   transition: 0.3s;
   z-index: 1000;
 }
 
 .sidebar.open {
-  right: 0;
+  left: 0;
 }
 
 .profile-area {
   display: flex;
   align-items: center;
-  padding: 20px;
-  gap: 12px;
-  border-bottom: 1px solid #ddd;
+  gap: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  color: white;
 }
 
-.avatar {
-  width: 45px;
-  height: 45px;
-  background: #0a6ed1;
+.profile-area .avatar {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-}
-
-.menu-list {
-  padding: 20px;
+  background: #666;
 }
 
 .menu-list button {
+  display: block;
   width: 100%;
   margin-bottom: 12px;
-  padding: 10px;
+  background: none;
   border: none;
-  border-radius: 6px;
-  background: #f1f1f1;
+  color: white;
+  text-align: left;
   cursor: pointer;
+  font-size: 16px;
 }
 
-/* Mouse light */
+/* ===== profile-style card ===== */
+.profile-card {
+  width: 400px;
+  background: #fff;
+  margin: 80px auto;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.profile-card h2 {
+  margin-bottom: 20px;
+}
+
+/* ===== history list ===== */
+.history-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.history-card {
+  background: #f4f6f9;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  text-align: left;
+  font-size: 14px;
+}
+
+/* ===== back ===== */
+.back-btn {
+  display: inline-block;
+  margin-top: 10px;
+  color: black;
+  text-decoration: underline;
+}
+
+/* ===== mouse light ===== */
 #mouse-light {
   position: fixed;
   inset: 0;
   pointer-events: none;
+  z-index: 999;
 }
