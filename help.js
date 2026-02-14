@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
   const homeBtn = document.getElementById("homeBtn");
   const profileArea = document.getElementById("profileArea");
-  const mouseLight = document.getElementById("mouse-light");
+  
 
   // sidebar
   menuBtn.addEventListener("click", () => {
@@ -31,14 +31,4 @@ document.addEventListener("DOMContentLoaded", () => {
     location.href = "index.html";
   });
 
-  // mouse light
-  document.addEventListener("mousemove", (e) => {
-    mouseLight.style.background = `
-      radial-gradient(
-        circle at ${e.clientX}px ${e.clientY}px,
-        rgba(255,255,255,0.18),
-        rgba(0,0,0,0.65) 40%
-      )
-    `;
-  });
 });
