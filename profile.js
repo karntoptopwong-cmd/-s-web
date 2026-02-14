@@ -2,49 +2,33 @@ import { requireAuth } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // =============================
-  // 1️⃣ Auth (ของเดิม — ไม่แก้)
+  // 1️⃣ Auth (เหมือนของคุณ)
   // =============================
   const session = requireAuth();
   if (!session) return;
 
   const username = session.username;
+  document.getElementById("usernameDisplay").textContent = username;
 
   // =============================
-  // 2️⃣ DOM Elements (เพิ่ม editBtn, saveBtn)
+  // 2️⃣ Form + ปุ่ม (ชัดแบบคุณ)
   // =============================
-  const usernameDisplay = document.getElementById("usernameDisplay");
-
   const profileForm = document.getElementById("profileForm");
-  const fullname = document.getElementById("fullname");
-  const classInput = document.getElementById("class");
-  const numberInput = document.getElementById("number");
-  const email = document.getElementById("email");
-  const phone = document.getElementById("phone");
-
-  // 🔹 เพิ่มใหม่
   const editBtn = document.getElementById("editBtn");
   const saveBtn = document.getElementById("saveBtn");
 
-  if (
-    !profileForm ||
-    !fullname ||
-    !classInput ||
-    !numberInput ||
-    !email ||
-    !phone ||
-    !editBtn ||   // 🔹 เพิ่ม
-    !saveBtn     // 🔹 เพิ่ม
-  ) {
-    console.error("Profile HTML element ไม่ครบ");
+  if (!profileForm || !editBtn || !saveBtn) {
+    console.error("Profile element ไม่ครบ");
     return;
   }
 
-  if (usernameDisplay) {
-    usernameDisplay.textContent = username;
-  }
+  // =============================
+  // 3️⃣ Inputs (ยืดหยุ่นแบบผม)
+  // =============================
+  const inputs = profileForm.querySelectorAll("input");
 
   // =============================
-  // 3️⃣ Load ข้อมูลจาก localStorage (ของเดิม — ไม่แก้)
+  // 4️⃣ Load ข้อมูล
   // =============================
   const key = `profile_${username}`;
   let data = {};
@@ -52,58 +36,54 @@ document.addEventListener("DOMContentLoaded", () => {
   try {
     data = JSON.parse(localStorage.getItem(key)) || {};
   } catch {
-    console.error("ข้อมูลใน localStorage ไม่ใช่ JSON");
+    console.error("localStorage ไม่ใช่ JSON");
   }
 
-  fullname.value = data.fullname || "";
-  classInput.value = data.class || "";
-  numberInput.value = data.number || "";
-  email.value = data.email || "";
-  phone.value = data.phone || "";
+  inputs.forEach(input => {
+    input.value = data[input.id] || "";
+    input.disabled = true; // 🔒 ล็อกตั้งแต่แรก
+  });
+
+  saveBtn.disabled = true;
 
   // =============================
-  // 4️⃣ EDIT BUTTON (เพิ่มใหม่ทั้งก้อน)
+  // 5️⃣ EDIT
   // =============================
   editBtn.addEventListener("click", () => {
-    console.log("EDIT CLICKED");
-
-    fullname.disabled = false;
-    classInput.disabled = false;
-    numberInput.disabled = false;
-    email.disabled = false;
-    phone.disabled = false;
+    inputs.forEach(input => input.disabled = false);
 
     saveBtn.disabled = false;
     saveBtn.classList.add("active");
   });
 
   // =============================
-  // 5️⃣ SAVE (เพิ่มล็อกกลับหลังบันทึก)
+  // 6️⃣ SAVE (พร้อมต่อ server)
   // =============================
   profileForm.addEventListener("submit", e => {
     e.preventDefault();
 
-    localStorage.setItem(
-      key,
-      JSON.stringify({
-        fullname: fullname.value,
-        class: classInput.value,
-        number: numberInput.value,
-        email: email.value,
-        phone: phone.value
-      })
-    );
+    const newData = {};
 
-    alert("บันทึกข้อมูลเรียบร้อยแล้ว");
+    inputs.forEach(input => {
+      newData[input.id] = input.value;
+      input.disabled = true; // 🔒 ล็อกกลับ
+    });
 
-    // 🔹 เพิ่มใหม่: ล็อกกลับ
-    fullname.disabled = true;
-    classInput.disabled = true;
-    numberInput.disabled = true;
-    email.disabled = true;
-    phone.disabled = true;
+    // localStorage (ตอนนี้)
+    localStorage.setItem(key, JSON.stringify(newData));
+
+    // 👉 อนาคตต่อ server ตรงนี้
+    /*
+    fetch("/api/profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newData)
+    });
+    */
 
     saveBtn.disabled = true;
     saveBtn.classList.remove("active");
+
+    alert("บันทึกข้อมูลเรียบร้อยแล้ว");
   });
 });
