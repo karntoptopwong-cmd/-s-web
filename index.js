@@ -5,19 +5,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const passwordInput = document.getElementById("password");
   const errorMsg = document.getElementById("errorMsg");
 
-  if (!loginForm) {
-    console.error("loginForm not found");
-    return;
-  }
-
   loginForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
     const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
 
-    window.location.href = "loggedin.html";
-});
+    if (!username || !password) {
+      errorMsg.textContent = "กรุณากรอกข้อมูล";
+      return;
+    }
 
-});
+    localStorage.setItem("session", JSON.stringify({
+      username,
+      expireAt: Date.now() + 24 * 60 * 60 * 1000
+    }));
 
+    location.href = "loggedin.html";
+  });
+});
