@@ -1,52 +1,40 @@
-document.addEventListener("DOMContentLoaded", () => {
+// =======================
+// Auth
+// =======================
+const session = getSession();
 
-  const session = getSession();
+// welcome username
+document.getElementById("welcome").innerText =
+  `Welcome ${session.username}`;
 
-if (session) {
-  document.getElementById("welcome").innerText =
-    `Welcome ${session.username}`;
-}
+// =======================
+// Sidebar Toggle
+// =======================
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.getElementById("sidebar");
 
+menuBtn.addEventListener("click", () => {
+  sidebar.classList.toggle("active");
+});
 
-  const session = getSession();
-  if (!session) {
-    location.href = "index.html";
-    return;
-  }
-  const mouseLight = document.getElementById("mouse-light");
-  const username = session.username;
+// =======================
+// Logout
+// =======================
+document
+  .getElementById("logoutBtn")
+  .addEventListener("click", logout);
 
-  document.getElementById("welcomeMsg").textContent =
-    `Welcome, ${username}`;
+// =======================
+// Mouse Light Effect
+// =======================
+const mouseLight = document.getElementById("mouse-light");
 
-  const pointKey = `points_${username}`;
-  let points = Number(localStorage.getItem(pointKey)) || 0;
-  localStorage.setItem(pointKey, points);
-
-  document.getElementById("points").textContent =
-    `Points: ${points}`;
-
-  document.getElementById("logoutBtn").addEventListener("click", () => {
-    localStorage.removeItem("session");
-    location.href = "index.html";
-  });
-
-  document.getElementById("historyBtn").addEventListener("click", () => {
-    location.href = "history.html";
-  });
-
-  document.getElementById("profileArea").addEventListener("click", () => {
-    location.href = "profile.html";
-  });
-  document.addEventListener("mousemove", (e) => {
+document.addEventListener("mousemove", (e) => {
   mouseLight.style.background = `
     radial-gradient(
       circle at ${e.clientX}px ${e.clientY}px,
-      rgba(255, 255, 255, 0.2),
-      rgba(0, 0, 0, 0.7) 40%
+      rgba(255,255,255,0.25),
+      rgba(0,0,0,0.7) 40%
     )
   `;
 });
-});
-
-
