@@ -1,13 +1,9 @@
-
-document.addEventListener("mousemove", (e) => {
+document.addEventListener("DOMContentLoaded", () => {
   const light = document.getElementById("mouse-light");
   if (!light) return;
 
-  light.style.background = `
-    radial-gradient(
-      circle at ${e.clientX}px ${e.clientY}px,
-      rgba(255,255,255,0.2),
-      rgba(0,0,0,0.6) 40%
-    )
-  `;
+  document.addEventListener("mousemove", (e) => {
+    light.style.setProperty("--x", e.clientX + "px");
+    light.style.setProperty("--y", e.clientY + "px");
+  });
 });
