@@ -4,21 +4,21 @@
   <meta charset="UTF-8" />
   <title>History</title>
 
-  <!-- ใช้ sidebar + menu จาก loggedin -->
+  <!-- CSS หลัก (sidebar + menu) -->
   <link rel="stylesheet" href="loggedin.css">
   <!-- CSS เฉพาะ history -->
   <link rel="stylesheet" href="history.css">
 </head>
 <body>
 
-  <!-- ☰ -->
+  <!-- ☰ menu -->
   <button id="menuBtn" class="menu-btn">☰</button>
 
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
-    <div id="profileArea" class="profile-area">
+    <div class="profile-area">
       <div class="avatar"></div>
-      <span class="profile-text">Profile</span>
+      <span>Profile</span>
     </div>
 
     <div class="menu-list">
@@ -29,17 +29,16 @@
     </div>
   </div>
 
-  <!-- ===== Card กลางหน้า (เหมือน profile) ===== -->
+  <!-- กล่องกลาง -->
   <div class="history-card">
     <h2>History</h2>
 
-    <div id="historyList" class="history-list">
-      <!-- cards -->
-    </div>
+    <div id="historyList" class="history-list"></div>
 
     <a href="loggedin.html" class="back-btn">Back</a>
   </div>
 
+  <!-- mouse light -->
   <div id="mouse-light"></div>
 
   <script src="history.js"></script>
