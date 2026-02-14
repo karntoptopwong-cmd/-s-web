@@ -1,8 +1,10 @@
 #mouse-light {
   position: fixed;
+  left: var(--x);
+  top: var(--y);
+  pointer-events: none;
   width: 500px;
   height: 500px;
-  pointer-events: none;
   border-radius: 50%;
 
   background: radial-gradient(
