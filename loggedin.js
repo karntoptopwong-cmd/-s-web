@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  welcomeMsg.textContent = `Welcome, ${username}!`;
+  welcomeMsg.textContent = `Welcome to the home page, ${username}`;
 
   // ===== Points =====
   const pointKey = `points_${username}`;
@@ -82,3 +82,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
