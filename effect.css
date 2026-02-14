@@ -1,16 +1,16 @@
-body {
-  background: #555;
-}
-
 #mouse-light {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
   pointer-events: none;
-  z-index: 0;
-
+  border-radius: 50%;
   background: radial-gradient(
-    circle 180px at var(--x, 50%) var(--y, 50%),
-    rgba(255,255,255,0.35),
-    rgba(0,0,0,0.75) 70%
+    circle,
+    rgba(255,255,255,0.25),
+    rgba(255,255,255,0) 60%
   );
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
