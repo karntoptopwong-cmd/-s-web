@@ -1,45 +1,24 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault(); // 🔥 ถ้าไม่มีบรรทัดนี้ = ไม่ไปแน่นอน
 
-  const form = document.getElementById("loginForm");
-  const errorMsg = document.getElementById("errorMsg");
-  const mouseLight = document.getElementById("mouse-light");
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const error = document.getElementById("error");
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
+  const foundUser = users.find(
+    u => u.username === username && u.password === password
+  );
 
-    if (!username || !password) {
-      errorMsg.textContent = "กรุณากรอกข้อมูลให้ครบ";
-      return;
-    }
+  if (!foundUser) {
+    error.textContent = "ไม่พบผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
+    return;
+  }
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+  // ✅ สร้าง session
+  sessionStorage.setItem("sessionUser", username);
 
-    const user = users.find(
-      u => u.username === username && u.password === password
-    );
-
-    if (!user) {
-      errorMsg.textContent = "ไม่พบผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
-      return;
-    }
-
-    // ✅ สร้าง session
-    createSession(username);
-    location.href = "loggedin.html";
-  });
-
-  // mouse light
-  document.addEventListener("mousemove", (e) => {
-    mouseLight.style.background = `
-      radial-gradient(
-        circle at ${e.clientX}px ${e.clientY}px,
-        rgba(255,255,255,0.2),
-        rgba(0,0,0,0.6) 40%
-      )
-    `;
-  });
-
+  // ✅ ไปหน้า loggedin
+  window.location.href = "loggedin.html";
 });
