@@ -29,7 +29,7 @@
     position: relative;   /* ⬅ ไม่ลอยแล้ว */
   display: block;
   margin-left: auto;    /* ดันไปขวา */
-  margin-bottom: 15px;  /* ระยะห่างจากช่องถัดไป */
+  margin-bottom: 20px;  /* ระยะห่างจากช่องถัดไป */
   padding: 4px 10px;
   font-size: 12px;
   border-radius: 8px;
@@ -75,5 +75,6 @@ input {
     color: gray;
     font-size: 12px;
 }
+
 
 
