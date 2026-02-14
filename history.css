@@ -3,15 +3,17 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* กล่องกลางแบบ profile */
+/* กล่องกลาง */
 .history-card {
   width: 420px;
   background: #fff;
-  margin: 80px auto;
+  margin: 90px auto;
   padding: 25px;
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.15);
   text-align: center;
+  position: relative;
+  z-index: 10;
 }
 
 /* list */
@@ -35,20 +37,25 @@ body {
 .back-btn {
   display: inline-block;
   margin-top: 20px;
-  text-decoration: underline;
   color: black;
+  text-decoration: underline;
 }
 
 /* mouse light */
 #mouse-light {
   position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(
-    circle at center,
-    rgba(255,255,255,0.15),
-    rgba(0,0,0,0.6) 40%
-  );
-  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 
+  pointer-events: none;
+
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255,255,255,0.18),
+    rgba(0,0,0,0.65) 40%
+  );
+
+  z-index: 999999;
 }
