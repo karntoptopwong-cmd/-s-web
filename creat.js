@@ -7,23 +7,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
+    const confirm = document.getElementById("confirmPassword").value;
 
-    if (!username || !password) {
-      errorMsg.textContent = "กรุณากรอกข้อมูลให้ครบ";
+    if (password !== confirm) {
+      errorMsg.textContent = "Passwords do not match";
       return;
     }
 
-    const users = getUsers();
+    let users = JSON.parse(localStorage.getItem("users")) || [];
 
-    const exists = users.find(u => u.username === username);
-    if (exists) {
-      errorMsg.textContent = "ชื่อผู้ใช้นี้ถูกใช้แล้ว";
+    if (users.find(u => u.username === username)) {
+      errorMsg.textContent = "Username already exists";
       return;
     }
 
     users.push({ username, password });
-    saveUsers(users);
+    localStorage.setItem("users", JSON.stringify(users));
 
-    window.location.href = "index.html";
+    location.href = "index.html";
   });
 });
