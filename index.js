@@ -1,26 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const username = session.userId;
-  // ✅ แจ้ง server ว่าผู้ใช้นี้กำลังใช้งาน
-fetch("https://arduino-api-sain.onrender.com/login?user=" + username);
 
-
-// ✅ ดึงคะแนนมาแสดง
-fetch("https://arduino-api-sain.onrender.com/score")
-  .then(res => res.json())
-  .then(data => {
-
-    const scoreEl = document.getElementById("score");
-
-    if (!scoreEl) return;
-
-    if (data[username] !== undefined) {
-      scoreEl.textContent = data[username];
-    } else {
-      scoreEl.textContent = 0;
-    }
-
-  });
-
+  // ===== 1) ดึง session =====
   const sessionRaw = localStorage.getItem("session");
 
   if (!sessionRaw) {
@@ -37,16 +17,29 @@ fetch("https://arduino-api-sain.onrender.com/score")
     return;
   }
 
-  if (Date.now() > session.expireAt) {
+  // (ถ้าไม่มีระบบหมดอายุ ตัดส่วนนี้ทิ้งได้)
+  if (session.expireAt && Date.now() > session.expireAt) {
     localStorage.removeItem("session");
     window.location.href = "index.html";
     return;
   }
 
-  const username = session.userId; // ✅ ตัวตนผู้ใช้จริง
+  // ✅ ตัวตนผู้ใช้ (มาตรฐานเดียว)
+  const username = session.username;
 
+  // ===== 2) แจ้ง server ว่าผู้ใช้งานอยู่ =====
+  fetch("https://arduino-api-sain.onrender.com/login?user=" + username)
+    .catch(err => console.error("login notify failed", err));
 
+  // ===== 3) ดึงคะแนน =====
+  fetch("https://arduino-api-sain.onrender.com/score")
+    .then(res => res.json())
+    .then(data => {
+      const scoreEl = document.getElementById("score");
+      if (!scoreEl) return;
+
+      scoreEl.textContent = data[username] ?? 0;
+    })
+    .catch(err => console.error("load score failed", err));
 
 });
-
-
