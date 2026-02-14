@@ -45,11 +45,8 @@ fetch("https://arduino-api-sain.onrender.com/score")
 
   const username = session.userId; // ✅ ตัวตนผู้ใช้จริง
 
-  // แสดง Welcome
-  const welcomeMsg = document.getElementById("welcomeMsg");
-  if (welcomeMsg) {
-    welcomeMsg.textContent = `Welcome ${username}`;
-  }
+
 
 });
+
 
