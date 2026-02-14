@@ -1,4 +1,7 @@
 
+.field-with-edit {
+  position: relative;
+}
 
 .profile-card {
     width: 400px;
@@ -28,7 +31,7 @@
     padding: 6px 12px;
     border-radius: 8px;
     cursor: pointer;
-    z-index: 2;
+    z-index: 10;
 }
 
 
@@ -36,6 +39,8 @@
 form {
     text-align: left;
     margin-top: 28px; /* ดันฟอร์มลงจากหัวการ์ด */
+    position: relative;
+  z-index: 1;
 }
 
 /* กลุ่ม ชื่อ-นามสกุล + Edit */
@@ -97,7 +102,3 @@ input {
   color: gray;
   font-size: 12px;
 }
-
-
-
-
