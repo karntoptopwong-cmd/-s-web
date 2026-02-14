@@ -9,23 +9,23 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     const username = usernameInput.value.trim();
-    const password = passwordInput.value.trim();
+    const password = passwordInput.value;
 
     if (!username || !password) {
       errorMsg.textContent = "กรุณากรอกข้อมูล";
       return;
     }
 
-    // 🔹 โหลด users ทั้งหมด
+    // 🔹 โหลด users (⬅ เพิ่ม)
     const users = JSON.parse(localStorage.getItem("users")) || {};
 
-    // ❌ ไม่มีบัญชีนี้
+    // ❌ ไม่มีบัญชีนี้ (⬅ เพิ่ม)
     if (!users[username]) {
       errorMsg.textContent = "ไม่มีบัญชีผู้ใช้นี้";
       return;
     }
 
-    // ❌ รหัสผ่านผิด
+    // ❌ รหัสผ่านผิด (⬅ เพิ่ม)
     if (users[username].password !== password) {
       errorMsg.textContent = "รหัสผ่านไม่ถูกต้อง";
       return;
