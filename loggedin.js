@@ -1,34 +1,84 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const session = requireAuth();
-  if (!session) return;
+  const username = localStorage.getItem("currentUser");
 
   const welcomeMsg = document.getElementById("welcomeMsg");
+  const pointsDisplay = document.getElementById("points");
+  const logoutBtn = document.getElementById("logoutBtn");
+
   const menuBtn = document.getElementById("menuBtn");
   const sidebar = document.getElementById("sidebar");
-  const logoutBtn = document.getElementById("logoutBtn");
+  const profileArea = document.getElementById("profileArea");
   const historyBtn = document.getElementById("historyBtn");
   const mouseLight = document.getElementById("mouse-light");
 
-  welcomeMsg.textContent = `Welcome ${session.username}`;
+  if (!welcomeMsg || !pointsDisplay || !logoutBtn || !menuBtn || !sidebar) {
+    console.error("HTML element ไม่ครบ");
+    return;
+  }
 
+  if (!username) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  welcomeMsg.textContent = `Welcome to the home page, ${username}`;
+
+  // ===== Points =====
+  const pointKey = `points_${username}`;
+  let pointsRaw = localStorage.getItem(pointKey);
+  let points = 0;
+
+  if (pointsRaw !== null) {
+    const parsed = Number(pointsRaw);
+    if (!Number.isNaN(parsed) && parsed >= 0) {
+      points = parsed;
+    } else {
+      // ข้อมูลพัง → reset
+      localStorage.setItem(pointKey, 0);
+      points = 0;
+    }
+  } else {
+    localStorage.setItem(pointKey, 0);
+  }
+
+  pointsDisplay.textContent = `Points: ${points}`;
+
+  // ===== Menu =====
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
   });
 
-  historyBtn.addEventListener("click", () => {
-    location.href = "history.html";
+  // ===== Navigation =====
+  if (profileArea) {
+    profileArea.addEventListener("click", () => {
+      window.location.href = "profile.html";
+    });
+  }
+
+  if (historyBtn) {
+    historyBtn.addEventListener("click", () => {
+      window.location.href = "history.html";
+    });
+  }
+
+  // ===== Logout =====
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("currentUser");
+    window.location.href = "index.html";
   });
 
-  logoutBtn.addEventListener("click", logout);
+  // ===== Mouse Light =====
+  if (mouseLight) {
+    document.addEventListener("mousemove", (e) => {
+      mouseLight.style.background = `
+        radial-gradient(
+          circle at ${e.clientX}px ${e.clientY}px,
+          rgba(255, 255, 255, 0.2),
+          rgba(0, 0, 0, 0.6) 40%
+        )
+      `;
+    });
+  }
 
-  document.addEventListener("mousemove", (e) => {
-    mouseLight.style.background = `
-      radial-gradient(
-        circle at ${e.clientX}px ${e.clientY}px,
-        rgba(255,255,255,0.2),
-        rgba(0,0,0,0.6) 40%
-      )
-    `;
-  });
 });
