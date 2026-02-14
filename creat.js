@@ -1,70 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("signupForm");
+  const errorMsg = document.getElementById("errorMsg");
 
-  const form = document.getElementById('signupForm');
-  const errorMsg = document.getElementById('errorMsg');
-  const mouseLight = document.getElementById("mouse-light");
-
-  if (!form) return; // กัน error
-
-  form.addEventListener('submit', function(e) {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
 
-    if (!username || !password || !confirmPassword) {
-      errorMsg.textContent = "Please fill in all fields.";
+    if (!username || !password) {
+      errorMsg.textContent = "กรุณากรอกข้อมูลให้ครบ";
       return;
     }
 
-    if (password !== confirmPassword) {
-      errorMsg.textContent = "Passwords do not match.";
+    const users = getUsers();
+
+    const exists = users.find(u => u.username === username);
+    if (exists) {
+      errorMsg.textContent = "ชื่อผู้ใช้นี้ถูกใช้แล้ว";
       return;
     }
 
-    const existingUserRaw = localStorage.getItem(`user_${username}`);
+    users.push({ username, password });
+    saveUsers(users);
 
-    if (existingUserRaw) {
-      // ✅ กัน JSON เสีย
-      try {
-        JSON.parse(existingUserRaw);
-        errorMsg.textContent = "Username already exists.";
-        return;
-      } catch {
-        // ข้อมูลพัง → ลบแล้วให้สมัครใหม่
-        localStorage.removeItem(`user_${username}`);
-      }
-    }
-
-    const userData = { username, password };
-
-    try {
-      localStorage.setItem(
-        `user_${username}`,
-        JSON.stringify(userData)
-      );
-    } catch (err) {
-      console.error("Save failed:", err);
-      errorMsg.textContent = "Cannot save account. Storage error.";
-      return;
-    }
-
-    // ไม่ auto login
     window.location.href = "index.html";
   });
-
-  // ===== Mouse Light Effect =====
-  if (mouseLight) {
-    document.addEventListener("mousemove", (e) => {
-      mouseLight.style.background = `
-        radial-gradient(
-          circle at ${e.clientX}px ${e.clientY}px,
-          rgba(255, 255, 255, 0.2),
-          rgba(0, 0, 0, 0.6) 40%
-        )
-      `;
-    });
-  }
-
 });
