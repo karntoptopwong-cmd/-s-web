@@ -31,7 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // 🔎 ตรวจ username ซ้ำ
+
+      // 🔍 ตรวจสอบ username ซ้ำ
       const { data: existingUser } = await window.supabaseClient
         .from("users")
         .select("username")
@@ -43,28 +44,31 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // ✅ เพิ่มผู้ใช้ใหม่
-      const { error } = await window.supabaseClient
-        .from("users")
-        .insert([
-          {
-            username: username,
-            password: password,
-            score: 0
-          }
-        ]);
-
-      if (error) {
-        errorMsg.textContent = "สมัครไม่ได้: " + error.message;
-        return;
-      }
-
-      alert("สมัครสำเร็จ!");
-      window.location.href = "index.html";
-
-    } catch (err) {
-      console.error(err);
-      errorMsg.textContent = "เชื่อมต่อเซิร์ฟเวอร์ไม่ได้";
+    } catch {
+      // ไม่พบ user = ใช้งานได้
     }
+
+    // ✅ บันทึกผู้ใช้ใหม่
+    const { error } = await window.supabaseClient
+      .from("users")
+      .insert([
+        {
+          username: username,
+          password: password,
+          score: 0
+        }
+      ]);
+
+    if (error) {
+      console.error(error);
+      errorMsg.textContent = "สมัครสมาชิกไม่สำเร็จ";
+      return;
+    }
+
+    alert("สมัครสมาชิกสำเร็จ!");
+
+    // ไปหน้า login
+    window.location.href = "index.html";
   });
+
 });
