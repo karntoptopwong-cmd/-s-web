@@ -1,10 +1,12 @@
 console.log("effect.js loaded");
 
-const light = document.getElementById("mouse-light");
+const spotlight = document.getElementById("spotlight");
 
-if (light) {
-  document.addEventListener("mousemove", (e) => {
-    light.style.setProperty("--x", e.clientX + "px");
-    light.style.setProperty("--y", e.clientY + "px");
-  });
+if (!spotlight) {
+  console.error("spotlight not found");
 }
+
+document.addEventListener("mousemove", (e) => {
+  spotlight.style.setProperty("--x", e.clientX + "px");
+  spotlight.style.setProperty("--y", e.clientY + "px");
+});
