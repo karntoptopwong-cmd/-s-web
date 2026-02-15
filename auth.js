@@ -36,7 +36,13 @@ export function logout() {
 export function getAuthHeader() {
   const session = getSession();
   if (!session) return {};
+  export function getAuthHeader() {
+  const session = getSession();
+  if (!session || !session.token) return {};
+
   return {
-    "Authorization": "Bearer " + session.token
+    Authorization: `Bearer ${session.token}`
   };
+}
+
 }
