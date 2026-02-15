@@ -2,16 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Create Account</title>
 
-  <!-- CSS พื้นฐาน -->
+  <!-- CSS -->
   <link rel="stylesheet" href="base.css">
-
-  <!-- CSS เอฟเฟกต์ (ไฟฉายเมาส์) -->
   <link rel="stylesheet" href="effect.css">
-
-  <!-- CSS เฉพาะหน้า create -->
   <link rel="stylesheet" href="creat.css">
 </head>
 
@@ -37,12 +33,17 @@
 
   <div id="spotlight"></div>
 
-  <!-- JS -->
-  <script src="creat.js" defer></script>
-<script src="effect.js" defer></script>
+  <!-- ✅ โหลด Supabase ก่อน -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+  <!-- ✅ ตั้งค่า client -->
+  <script src="supabaseClient.js"></script>
+
+  <!-- เอฟเฟกต์ -->
+  <script src="effect.js"></script>
+
+  <!-- สมัครสมาชิก -->
+  <script src="creat.js"></script>
 
 </body>
 </html>
-
-
