@@ -21,13 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
       errorMsg.textContent = "กรุณากรอกข้อมูล";
       return;
     }
-async function loginUser(username) {
-  const res = await fetch(`/login?user=${username}`);
-  const data = await res.json();
-
-  localStorage.setItem("token", data.token);
-}
-
     // 🔹 โหลด users
     const users = JSON.parse(localStorage.getItem("users")) || {};
 
@@ -51,4 +44,5 @@ async function loginUser(username) {
   });
 
 });
+
 
