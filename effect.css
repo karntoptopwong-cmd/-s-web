@@ -9,20 +9,21 @@
 
   background:
     radial-gradient(
-      circle 220px at var(--x) var(--y),
-      rgba(255,255,255,0.12) 0%,
-      rgba(255,255,255,0.10) 20%,
-      rgba(255,255,255,0.07) 40%,
-      rgba(255,255,255,0.04) 55%,
-      rgba(0,0,0,0.0) 70%
+      circle 180px at var(--x) var(--y),
+      rgba(255,255,255,0.13) 0%,
+      rgba(255,255,255,0.12) 18%,
+      rgba(255,255,255,0.10) 32%,
+      rgba(255,255,255,0.07) 45%,
+      rgba(255,255,255,0.04) 60%,
+      rgba(0,0,0,0.0) 72%
     ),
     radial-gradient(
-      circle 420px at var(--x) var(--y),
-      rgba(0,0,0,0.15) 0%,
-      rgba(0,0,0,0.35) 50%,
-      rgba(0,0,0,0.65) 80%,
-      rgba(0,0,0,0.8) 100%
+      circle 240px at var(--x) var(--y),
+      rgba(0,0,0,0.12) 0%,
+      rgba(0,0,0,0.30) 45%,
+      rgba(0,0,0,0.60) 78%,
+      rgba(0,0,0,0.80) 100%
     );
 
-  filter: blur(14px);
+  filter: blur(16px);
 }
