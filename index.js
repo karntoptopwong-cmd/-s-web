@@ -11,39 +11,52 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault(); // ✅ ต้องมี
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value;
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value;
 
-    if (!username || !password) {
-      errorMsg.textContent = "กรุณากรอกข้อมูล";
+  if (!username || !password) {
+    errorMsg.textContent = "กรุณากรอกข้อมูล";
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      "https://arduino-api-sain.onrender.com/login?user=" +
+      username +
+      "&pass=" +
+      password
+    );
+
+    const data = await res.json();
+
+    // ❌ ล็อกอินไม่สำเร็จ
+    if (data.error) {
+      errorMsg.textContent = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
       return;
     }
-    async function loginUser(username) {
-  const res = await fetch("https://arduino-api-sain.onrender.com/login?user=" + username);
-  const data = await res.json();
 
-  localStorage.setItem("token", data.token);
-}
+    // ✅ เก็บ token
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("username", data.user);
 
-    
-    if (users[username].password !== password) {
-      errorMsg.textContent = "รหัสผ่านไม่ถูกต้อง";
-      return;
-    }
-
-    // ✅ [ถูกที่] สร้าง session
+    // ✅ สร้าง session
     localStorage.setItem("session", JSON.stringify({
-      username,
-      expireAt: Date.now() + 24 * 60 * 60 * 1000
+      username: data.user,
+      expireAt: Date.now() + 86400000
     }));
 
     window.location.href = "loggedin.html";
-  });
+
+  } catch (err) {
+    errorMsg.textContent = "เชื่อมต่อเซิร์ฟเวอร์ไม่ได้";
+  }
+});
 
 });
+
 
 
 
