@@ -23,27 +23,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
 
-      if (data.error) {
+      if (data.token) {
+
+        // ✅ บันทึก token
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", username);
+
+        // ไปหน้าหลัก
+        window.location.href = "loggedin.html";
+
+      } else {
         errorMsg.textContent = "ชื่อผู้ใช้หรือรหัสผ่านผิด";
-        return;
       }
-
-      // ✅ บันทึก token
-      localStorage.setItem("token", data.token);
-
-      // ✅ สร้าง session
-      localStorage.setItem("session", JSON.stringify({
-        username: data.user,
-        expireAt: Date.now() + 86400000
-      }));
-
-      window.location.href = "loggedin.html";
 
     } catch (err) {
       errorMsg.textContent = "เชื่อมต่อเซิร์ฟเวอร์ไม่ได้";
-      console.error(err);
     }
-
   });
 
 });
