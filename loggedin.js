@@ -41,17 +41,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================
   async function loadPoints() {
     try {
-      const res = await fetch("https://arduino-api-sain.onrender.com/score");
-      const data = await res.json();
+  const res = await fetch(
+    `https://arduino-api-sain.onrender.com/login?user=${username}&pass=${password}`
+  );
 
-      const userPoints = data?.[username] ?? 0;
-      pointsDisplay.textContent = `Points: ${userPoints}`;
-    } catch (err) {
-      console.error("โหลดคะแนนไม่ได้", err);
-      pointsDisplay.textContent = "Points: unavailable";
-    }
+  const data = await res.json();
+
+  if (data.error) {
+    errorMsg.textContent = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
+    return;
   }
 
+  localStorage.setItem("token", data.token);
+
+  localStorage.setItem("session", JSON.stringify({
+    username,
+    expireAt: Date.now() + 86400000
+  }));
+
+  window.location.href = "loggedin.html";
+
+} catch (err) {
+  errorMsg.textContent = "เชื่อมต่อเซิร์ฟเวอร์ไม่ได้";
+}
   loadPoints();
 
   // =============================
@@ -75,3 +87,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   logoutBtn.addEventListener("click", logout);
 });
+
