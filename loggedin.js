@@ -1,9 +1,9 @@
-import { requireAuth, logout } from "./auth.js";
+import { requireAuth, logout, getAuthHeader } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
   // =============================
-  // 🔐 1) ตรวจสอบ session
+  // 1) ตรวจสอบ session
   // =============================
   const session = requireAuth();
   if (!session) return;
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const username = session.username;
 
   // =============================
-  // 2) ดึง element
+  // 2) DOM elements
   // =============================
   const welcomeMsg = document.getElementById("welcomeMsg");
   const pointsDisplay = document.getElementById("points");
@@ -22,63 +22,47 @@ document.addEventListener("DOMContentLoaded", () => {
   const helpBtn = document.getElementById("helpBtn");
   const logoutBtn = document.getElementById("logoutBtn");
 
-  // =============================
-  // 3) เช็ก element
-  // =============================
   if (!welcomeMsg || !pointsDisplay || !menuBtn || !sidebar || !logoutBtn) {
     console.error("HTML element ไม่ครบ");
     return;
   }
 
   // =============================
-  // 4) แสดงข้อความเริ่มต้น
+  // 3) UI เริ่มต้น
   // =============================
   welcomeMsg.textContent = `Welcome to the home page, ${username}`;
   pointsDisplay.textContent = "Points: loading...";
 
   // =============================
-  // 5) โหลดคะแนน
+  // 4) โหลดคะแนนจาก server
   // =============================
   async function loadPoints() {
     try {
-  const res = await fetch("https://arduino-api-sain.onrender.com/login", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    username: username,
-    password: password
-  })
-});
+      const res = await fetch(
+        "https://arduino-api-sain.onrender.com/score",
+        {
+          headers: {
+            ...getAuthHeader() // Bearer token
+          }
+        }
+      );
 
-const data = await res.json();
+      if (!res.ok) throw new Error("โหลดคะแนนไม่สำเร็จ");
 
-  );
+      const data = await res.json();
+      const userPoints = data[username] ?? 0;
 
-  const data = await res.json();
-
-  if (data.error) {
-    errorMsg.textContent = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
-    return;
+      pointsDisplay.textContent = `Points: ${userPoints}`;
+    } catch (err) {
+      console.error(err);
+      pointsDisplay.textContent = "Points: error";
+    }
   }
 
-  localStorage.setItem("token", data.token);
-
-  localStorage.setItem("session", JSON.stringify({
-    username,
-    expireAt: Date.now() + 86400000
-  }));
-
-  window.location.href = "loggedin.html";
-
-} catch (err) {
-  errorMsg.textContent = "เชื่อมต่อเซิร์ฟเวอร์ไม่ได้";
-}
   loadPoints();
 
   // =============================
-  // 6) UI events
+  // 5) UI events
   // =============================
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
@@ -98,5 +82,3 @@ const data = await res.json();
 
   logoutBtn.addEventListener("click", logout);
 });
-
-
