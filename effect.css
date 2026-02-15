@@ -16,7 +16,7 @@
   pointer-events: none;
   z-index: 9999;
 
-  background: radial-gradient(
+   background: radial-gradient(
     circle 280px at var(--x) var(--y),
     rgba(190,190,190,0.12) 0%,
     rgba(170,170,170,0.11) 18%,
