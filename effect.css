@@ -7,21 +7,20 @@
   pointer-events: none;
   z-index: 9999;
 
-  background: radial-gradient(
-  circle 240px at var(--x) var(--y),
+  background:
+    radial-gradient(
+      circle 180px at var(--x) var(--y),
+      rgba(255,255,255,0.18) 0%,
+      rgba(255,255,255,0.10) 35%,
+      rgba(255,255,255,0.04) 55%,
+      rgba(0,0,0,0.0) 70%
+    ),
+    radial-gradient(
+      circle 360px at var(--x) var(--y),
+      rgba(0,0,0,0.15) 0%,
+      rgba(0,0,0,0.45) 55%,
+      rgba(0,0,0,0.75) 100%
+    );
 
-  /* core (ไม่แสบตา) */
-  rgba(255,255,255,0.22) 0%,
-
-  rgba(255,255,255,0.18) 18%,
-  rgba(255,255,255,0.13) 32%,
-  rgba(255,255,255,0.08) 45%,
-
-  /* fade to dark */
-  rgba(0,0,0,0.25) 60%,
-  rgba(0,0,0,0.55) 82%,
-  rgba(0,0,0,0.75) 100%
-);
-
-  z-index: 9999;
+  filter: blur(8px);
 }
