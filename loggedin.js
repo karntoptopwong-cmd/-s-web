@@ -28,9 +28,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   welcomeMsg.textContent = `Welcome to the home page, ${username}`;
 
-  const pointKey = `points_${username}`;
-  const points = Number(localStorage.getItem(pointKey)) || 0;
-  pointsDisplay.textContent = `Points: ${points}`;
+  async function loadPoints() {
+  try {
+    const res = await fetch("https://arduino-api-sain.onrender.com/score");
+    const data = await res.json();
+
+    const userPoints = data[username] || 0;
+    pointsDisplay.textContent = `Points: ${userPoints}`;
+  } catch (err) {
+    console.error("โหลดคะแนนไม่ได้", err);
+  }
+}
+
+// โหลดคะแนนทันที
+loadPoints();
+
 
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
@@ -51,3 +63,4 @@ document.addEventListener("DOMContentLoaded", () => {
   logoutBtn.addEventListener("click", logout);
 
 });
+
