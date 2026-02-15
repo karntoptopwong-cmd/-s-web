@@ -5,18 +5,15 @@
   position: fixed;
   inset: 0;
   pointer-events: none;
+  z-index: 9999;
 
   background: radial-gradient(
-  circle 240px at var(--x) var(--y),
-  rgba(255,255,255,0.12) 0%,
-  rgba(255,255,255,0.10) 20%,
-  rgba(255,255,255,0.08) 40%,
-  rgba(0,0,0,0.35) 60%,
-  rgba(0,0,0,0.6) 85%,
-  rgba(0,0,0,0.75) 100%
-);
-
-
-
-  z-index: 9999;
+    circle 260px at var(--x) var(--y),
+    rgba(200,200,200,0.18) 0%,
+    rgba(180,180,180,0.14) 25%,
+    rgba(140,140,140,0.10) 45%,
+    rgba(0,0,0,0.35) 65%,
+    rgba(0,0,0,0.6) 85%,
+    rgba(0,0,0,0.78) 100%
+  );
 }
