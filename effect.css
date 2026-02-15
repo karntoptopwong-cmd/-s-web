@@ -1,8 +1,12 @@
 #mouse-light {
+  --x: 50vw;
+  --y: 50vh;
+
   position: fixed;
   left: var(--x);
   top: var(--y);
   pointer-events: none;
+
   width: 500px;
   height: 500px;
   border-radius: 50%;
