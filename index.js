@@ -23,12 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
 
-      // ✅ ตรวจว่ามี Supabase client หรือไม่
       if (!window.supabaseClient) {
         errorMsg.textContent = "Supabase ยังไม่โหลด";
         return;
       }
 
+      // 🔍 ตรวจสอบผู้ใช้
       const { data, error } = await window.supabaseClient
         .from("users")
         .select("*")
@@ -41,10 +41,23 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // ✅ บันทึก session
+      // ✅ สร้าง token
+      const token = crypto.randomUUID();
+
+      // ✅ บันทึก token ลงฐานข้อมูล
+      await window.supabaseClient
+        .from("users")
+        .update({
+          token: token,
+          token_expire: new Date(Date.now() + 86400000) // 1 วัน
+        })
+        .eq("id", data.id);
+
+      // ✅ บันทึก session ลงเครื่องผู้ใช้
       localStorage.setItem("session", JSON.stringify({
         username: data.username,
         score: data.score,
+        token: token,
         expireAt: Date.now() + 86400000
       }));
 
