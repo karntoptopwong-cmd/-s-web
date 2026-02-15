@@ -32,10 +32,21 @@
   
   <!-- เอฟเฟคไฟฉาย -->
   <div id="spotlight"></div>
-  
+
+  <!-- ✅ โหลด Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- ✅ เชื่อม Supabase -->
+  <script>
+    const supabase = window.supabase.createClient(
+      "https://cbhfydsjuawdcgrzxzzu.supabase.co",
+      "sb_publishable_nM-AoZn8-WSz2FQQX0zbHQ_pvcKOKAJ"
+    );
+  </script>
+
+  <!-- JS -->
   <script src="index.js" defer></script>
   <script src="effect.js" defer></script>
 
 </body>
 </html>
-
