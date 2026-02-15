@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // ✅ ใช้แบบนี้
-      const userPoints = data.score ?? 0;
+     const userPoints = data?.[username] ?? 0;
       pointsDisplay.textContent = `Points: ${userPoints}`;
 
     } catch (err) {
@@ -69,3 +69,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   logoutBtn.addEventListener("click", logout);
 });
+
