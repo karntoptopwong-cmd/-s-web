@@ -1,23 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ❌ [ตัดออก] loginForm (ไม่ใช่หน้าสมัคร)
   const form = document.getElementById("signupForm");
   const errorMsg = document.getElementById("errorMsg");
 
-  // ✅ [เพิ่ม] กัน element หาย
   if (!form || !errorMsg) {
     console.error("HTML element ไม่ครบ (create)");
     return;
   }
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault(); // ✅ ต้องมี
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
-    // ✅ validation
     if (!username || !password || !confirmPassword) {
       errorMsg.textContent = "กรุณากรอกข้อมูลให้ครบ";
       return;
@@ -28,22 +25,46 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // 🔹 โหลด users
-    const users = JSON.parse(localStorage.getItem("users")) || {};
-
-    // ❌ username ซ้ำ
-    if (users[username]) {
-      errorMsg.textContent = "ชื่อผู้ใช้นี้ถูกใช้แล้ว";
+    if (!window.supabaseClient) {
+      errorMsg.textContent = "Supabase ยังไม่โหลด";
       return;
     }
 
-    // ✅ [เพิ่ม] บันทึก user ใหม่
-    users[username] = { password };
+    try {
+      // 🔎 ตรวจ username ซ้ำ
+      const { data: existingUser } = await window.supabaseClient
+        .from("users")
+        .select("username")
+        .eq("username", username)
+        .single();
 
-    localStorage.setItem("users", JSON.stringify(users));
+      if (existingUser) {
+        errorMsg.textContent = "ชื่อผู้ใช้นี้ถูกใช้แล้ว";
+        return;
+      }
 
-    // ✅ redirect กลับ login
-    window.location.href = "index.html";
+      // ✅ เพิ่มผู้ใช้ใหม่
+      const { error } = await window.supabaseClient
+        .from("users")
+        .insert([
+          {
+            username: username,
+            password: password,
+            score: 0
+          }
+        ]);
+
+      if (error) {
+        errorMsg.textContent = "สมัครไม่ได้: " + error.message;
+        return;
+      }
+
+      alert("สมัครสำเร็จ!");
+      window.location.href = "index.html";
+
+    } catch (err) {
+      console.error(err);
+      errorMsg.textContent = "เชื่อมต่อเซิร์ฟเวอร์ไม่ได้";
+    }
   });
-
 });
