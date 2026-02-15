@@ -23,8 +23,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
 
-      // 🔹 ค้นหา user ใน Supabase
-      const { data, error } = await supabase
+      // ✅ ตรวจว่ามี Supabase client หรือไม่
+      if (!window.supabaseClient) {
+        errorMsg.textContent = "Supabase ยังไม่โหลด";
+        return;
+      }
+
+      const { data, error } = await window.supabaseClient
         .from("users")
         .select("*")
         .eq("username", username)
@@ -43,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
         expireAt: Date.now() + 86400000
       }));
 
-      // ไปหน้า dashboard
+      // ✅ ไปหน้า dashboard
       window.location.href = "loggedin.html";
 
     } catch (err) {
