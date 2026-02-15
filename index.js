@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // ✅ บันทึก session
       localStorage.setItem("session", JSON.stringify({
         username: data.user,
+        token: data.token,
         expireAt: Date.now() + 24 * 60 * 60 * 1000
       }));
 
@@ -55,4 +56,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
 
