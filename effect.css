@@ -7,13 +7,15 @@
   pointer-events: none;
 
   background: radial-gradient(
-  circle 240px at var(--x) var(--y),
-  rgba(255,255,255,0.18) 0%,
-  rgba(255,255,255,0.08) 25%,
-  rgba(0,0,0,0.35) 60%,
-  rgba(0,0,0,0.6) 85%,
-  rgba(0,0,0,0.75) 100%
+  circle 220px at var(--x) var(--y),
+  rgba(255,255,255,0.22) 0%,
+  rgba(255,255,255,0.18) 20%,
+  rgba(255,255,255,0.12) 40%,
+  rgba(255,255,255,0.06) 65%,
+  rgba(255,255,255,0.02) 85%,
+  rgba(255,255,255,0) 100%
 );
+
 
 
   z-index: 9999;
