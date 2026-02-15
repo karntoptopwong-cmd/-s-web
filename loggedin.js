@@ -41,8 +41,19 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================
   async function loadPoints() {
     try {
-  const res = await fetch(
-    `https://arduino-api-sain.onrender.com/login?user=${username}&pass=${password}`
+  const res = await fetch("https://arduino-api-sain.onrender.com/login", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    username: username,
+    password: password
+  })
+});
+
+const data = await res.json();
+
   );
 
   const data = await res.json();
@@ -87,4 +98,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   logoutBtn.addEventListener("click", logout);
 });
+
 
