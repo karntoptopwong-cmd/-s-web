@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const username = usernameInput.value.trim();
     const password = passwordInput.value;
+    console.log(username, password);
 
     if (!username || !password) {
       errorMsg.textContent = "กรุณากรอกข้อมูล";
@@ -54,3 +55,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
