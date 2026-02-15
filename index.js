@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const username = usernameInput.value.trim();
     const password = passwordInput.value;
-    console.log(username, password);
 
     if (!username || !password) {
       errorMsg.textContent = "กรุณากรอกข้อมูล";
@@ -23,28 +22,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // ✅ ส่งไป login ที่ server
-      const res = await fetch(
-        `https://arduino-api-sain.onrender.com/login?user=${username}&pass=${password}`
-      );
 
-      const data = await res.json();
+      // 🔹 ค้นหา user ใน Supabase
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("username", username)
+        .eq("password", password)
+        .single();
 
-      // ❌ login ไม่สำเร็จ
-      if (data.error) {
+      if (error || !data) {
         errorMsg.textContent = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
         return;
       }
 
-      // ✅ บันทึก token
-      localStorage.setItem("token", data.token);
-
       // ✅ บันทึก session
       localStorage.setItem("session", JSON.stringify({
-  username: data.user,
-  token: data.token,
-  expireAt: Date.now() + 86400000
-}));
+        username: data.username,
+        score: data.score,
+        expireAt: Date.now() + 86400000
+      }));
 
       // ไปหน้า dashboard
       window.location.href = "loggedin.html";
@@ -56,9 +53,3 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
-
-
-
-
-
-
