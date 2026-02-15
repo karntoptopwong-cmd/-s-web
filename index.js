@@ -41,10 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // ✅ บันทึก session
       localStorage.setItem("session", JSON.stringify({
-        username: data.user,
-        token: data.token,
-        expireAt: Date.now() + 24 * 60 * 60 * 1000
-      }));
+  username: data.user,
+  token: data.token,
+  expireAt: Date.now() + 86400000
+}));
 
       // ไปหน้า dashboard
       window.location.href = "loggedin.html";
@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
 
 
 
