@@ -43,9 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
   try {
     const token = session.token;
 
-    const res = await fetch(
-      `https://arduino-api-sain.onrender.com/score?token=${token}`
-    );
+    const res = await fetch(`https://arduino-api-sain.onrender.com/score?token=${session.token}`);
+
 
     const data = await res.json();
 
@@ -86,5 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   logoutBtn.addEventListener("click", logout);
 });
+
 
 
