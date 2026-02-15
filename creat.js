@@ -1,45 +1,49 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const loginForm = document.getElementById("loginForm");
-  const usernameInput = document.getElementById("username");
-  const passwordInput = document.getElementById("password");
+  // ❌ [ตัดออก] loginForm (ไม่ใช่หน้าสมัคร)
+  const form = document.getElementById("signupForm");
   const errorMsg = document.getElementById("errorMsg");
 
   // ✅ [เพิ่ม] กัน element หาย
-  if (!loginForm || !errorMsg) {
-    console.error("HTML element ไม่ครบ (login)");
+  if (!form || !errorMsg) {
+    console.error("HTML element ไม่ครบ (create)");
     return;
   }
 
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+  form.addEventListener("submit", (e) => {
+    e.preventDefault(); // ✅ ต้องมี
 
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value;
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
-    if (!username || !password) {
-      errorMsg.textContent = "กรุณากรอกข้อมูล";
+    // ✅ validation
+    if (!username || !password || !confirmPassword) {
+      errorMsg.textContent = "กรุณากรอกข้อมูลให้ครบ";
       return;
     }
 
+    if (password !== confirmPassword) {
+      errorMsg.textContent = "รหัสผ่านไม่ตรงกัน";
+      return;
+    }
+
+    // 🔹 โหลด users
     const users = JSON.parse(localStorage.getItem("users")) || {};
 
-    if (!users[username]) {
-      errorMsg.textContent = "ไม่มีบัญชีผู้ใช้นี้";
+    // ❌ username ซ้ำ
+    if (users[username]) {
+      errorMsg.textContent = "ชื่อผู้ใช้นี้ถูกใช้แล้ว";
       return;
     }
 
-    if (users[username].password !== password) {
-      errorMsg.textContent = "รหัสผ่านไม่ถูกต้อง";
-      return;
-    }
+    // ✅ [เพิ่ม] บันทึก user ใหม่
+    users[username] = { password };
 
-    // ✅ สร้าง session (ถูกที่แล้ว)
-    localStorage.setItem("session", JSON.stringify({
-      username,
-      expireAt: Date.now() + 24 * 60 * 60 * 1000
-    }));
+    localStorage.setItem("users", JSON.stringify(users));
 
-    location.href = "loggedin.html";
+    // ✅ redirect กลับ login
+    window.location.href = "index.html";
   });
+
 });
