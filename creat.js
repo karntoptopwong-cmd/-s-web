@@ -1,36 +1,45 @@
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
 
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
+  const loginForm = document.getElementById("loginForm");
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+  const errorMsg = document.getElementById("errorMsg");
 
-  if (!username || !password || !confirmPassword) {
-    errorMsg.textContent = "Please fill in all fields.";
+  // ✅ [เพิ่ม] กัน element หาย
+  if (!loginForm || !errorMsg) {
+    console.error("HTML element ไม่ครบ (login)");
     return;
   }
 
-  if (password !== confirmPassword) {
-    errorMsg.textContent = "Passwords do not match.";
-    return;
-  }
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  // 🔹 โหลด users ทั้งหมด
-  const users = JSON.parse(localStorage.getItem("users")) || {};
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value;
 
-  // 🔹 เช็กซ้ำ
-  if (users[username]) {
-    errorMsg.textContent = "Username already exists.";
-    return;
-  }
+    if (!username || !password) {
+      errorMsg.textContent = "กรุณากรอกข้อมูล";
+      return;
+    }
 
-  // 🔹 เพิ่ม user ใหม่
-  users[username] = {
-    password
-  };
+    const users = JSON.parse(localStorage.getItem("users")) || {};
 
-  localStorage.setItem("users", JSON.stringify(users));
+    if (!users[username]) {
+      errorMsg.textContent = "ไม่มีบัญชีผู้ใช้นี้";
+      return;
+    }
 
-  // 🔹 กลับไปหน้า login
-  window.location.href = "index.html";
+    if (users[username].password !== password) {
+      errorMsg.textContent = "รหัสผ่านไม่ถูกต้อง";
+      return;
+    }
+
+    // ✅ สร้าง session (ถูกที่แล้ว)
+    localStorage.setItem("session", JSON.stringify({
+      username,
+      expireAt: Date.now() + 24 * 60 * 60 * 1000
+    }));
+
+    location.href = "loggedin.html";
+  });
 });
