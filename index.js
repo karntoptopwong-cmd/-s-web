@@ -28,14 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   localStorage.setItem("token", data.token);
 }
 
-    // 🔹 โหลด users
-    const users = JSON.parse(localStorage.getItem("users")) || {};
-
-    if (!users[username]) {
-      errorMsg.textContent = "ไม่มีบัญชีผู้ใช้นี้";
-      return;
-    }
-
+    
     if (users[username].password !== password) {
       errorMsg.textContent = "รหัสผ่านไม่ถูกต้อง";
       return;
@@ -51,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
 
 
 
