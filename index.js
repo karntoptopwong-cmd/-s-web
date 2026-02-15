@@ -34,7 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .select("*")
         .eq("username", username)
         .eq("password", password)
-        .single();
+        .limit(1)
+.maybeSingle();
 
       if (error || !data) {
         errorMsg.textContent = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
@@ -71,3 +72,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
