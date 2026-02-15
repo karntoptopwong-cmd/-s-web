@@ -1,9 +1,10 @@
 console.log("effect.js loaded");
 
-document.addEventListener("mousemove", (e) => {
-  const light = document.getElementById("mouse-light");
-  if (!light) return;
+const light = document.getElementById("mouse-light");
 
-  light.style.setProperty("--x", `${e.clientX}px`);
-  light.style.setProperty("--y", `${e.clientY}px`);
-});
+if (light) {
+  document.addEventListener("mousemove", (e) => {
+    light.style.setProperty("--x", e.clientX + "px");
+    light.style.setProperty("--y", e.clientY + "px");
+  });
+}
