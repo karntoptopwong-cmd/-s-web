@@ -20,26 +20,42 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // แสดงข้อความ
+  // แสดงข้อความต้อนรับ
   welcomeMsg.textContent = `Welcome to the home page, ${username}`;
   pointsDisplay.textContent = "Points: loading...";
 
-  // โหลดคะแนน
+  // =============================
+  // โหลดคะแนน (เวอร์ชันใหม่)
+  // =============================
   async function loadPoints() {
     try {
+
       const res = await fetch(
-        `https://arduino-api-sain.onrender.com/score?token=${session.token}`
+        "https://arduino-api-sain.onrender.com/score",
+        {
+          headers: {
+            Authorization: `Bearer ${session.token}`
+          }
+        }
       );
 
       const data = await res.json();
 
-      if (data.error) {
+      console.log("API response:", data); // 🔍 debug
+
+      // ถ้า token ไม่ถูกต้อง
+      if (!res.ok) {
         pointsDisplay.textContent = "Session expired";
         return;
       }
 
-      // ✅ ใช้แบบนี้
-     const userPoints = data?.[username] ?? 0;
+      // รองรับหลายรูปแบบ response
+      const userPoints =
+        data?.points ??
+        data?.score ??
+        data?.[username] ??
+        0;
+
       pointsDisplay.textContent = `Points: ${userPoints}`;
 
     } catch (err) {
@@ -50,7 +66,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadPoints();
 
-  // UI
+  // =============================
+  // UI Interaction
+  // =============================
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
   });
@@ -68,8 +86,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   logoutBtn.addEventListener("click", logout);
+
 });
-
-
-
-
