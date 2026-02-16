@@ -1,15 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // 🔐 ตรวจสอบ session
-  const session = requireAuth();  // ประกาศตัวแปร session ที่นี่เพียงครั้งเดียว
-  console.log("SESSION ON DASHBOARD:", session);
 
-  if (!session || !session.token) {
-    console.warn("Session not found");
-    return;
-  }
+  // 🔐 ตรวจสอบ session
+  const session = requireAuth();
+  if (!session) return;
 
   const username = session.username;
-  const token = session.token;
 
   const welcomeMsg = document.getElementById("welcomeMsg");
   const pointsDisplay = document.getElementById("points");
@@ -25,50 +20,37 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // ✅ แสดงข้อความต้อนรับ
+  // แสดงข้อความ
   welcomeMsg.textContent = `Welcome to the home page, ${username}`;
   pointsDisplay.textContent = "Points: loading...";
 
-  // ✅ โหลดคะแนนจาก API
+  // โหลดคะแนน
   async function loadPoints() {
     try {
       const res = await fetch(
-        "https://arduino-api-sain.onrender.com/score",
-        {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
-        }
+        `https://arduino-api-sain.onrender.com/score?token=${session.token}`
       );
 
-      if (!res.ok) throw new Error("Network error");
-
       const data = await res.json();
-      console.log("API RESPONSE:", data);
 
-      if (data.error || data.message === "Invalid token") {
+      if (data.error) {
         pointsDisplay.textContent = "Session expired";
-        logout();
         return;
       }
 
-      // ✅ รองรับหลายรูปแบบ response
-      const userPoints =
-        data?.points ?? data?.score ?? data?.[username] ?? 0;
-
+      // ✅ ใช้แบบนี้
+     const userPoints = data?.[username] ?? 0;
       pointsDisplay.textContent = `Points: ${userPoints}`;
 
     } catch (err) {
-      console.error("❌ โหลดคะแนนไม่ได้:", err);
+      console.error("โหลดคะแนนไม่ได้", err);
       pointsDisplay.textContent = "Points: unavailable";
     }
   }
 
   loadPoints();
 
-  // 🎛 UI interactions
+  // UI
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
   });
@@ -87,3 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   logoutBtn.addEventListener("click", logout);
 });
+
+
+
+
