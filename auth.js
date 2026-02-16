@@ -47,10 +47,5 @@ function getAuthHeader() {
   };
 }
 
-// ทำให้เรียกใช้จาก HTML ได้
-window.getSession = getSession;
-window.requireAuth = requireAuth;
-window.logout = logout;
-window.getAuthHeader = getAuthHeader;
+// ตรงนี้เป็นการ export
 export { requireAuth, getSession, logout, getAuthHeader };
-
