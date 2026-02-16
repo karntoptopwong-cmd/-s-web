@@ -1,3 +1,4 @@
+-auth.js
 // ===== อ่าน session =====
 function getSession() {
   const raw = localStorage.getItem("session");
@@ -52,3 +53,5 @@ window.getSession = getSession;
 window.requireAuth = requireAuth;
 window.logout = logout;
 window.getAuthHeader = getAuthHeader;
+
+
