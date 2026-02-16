@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+const session = requireAuth();
+console.log("SESSION ON DASHBOARD:", session);
 
   // 🔐 ตรวจสอบ session
   const session = requireAuth();
@@ -89,3 +91,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   logoutBtn.addEventListener("click", logout);
 });
+
