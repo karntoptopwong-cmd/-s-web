@@ -1,4 +1,4 @@
--auth.js
+
 // ===== อ่าน session =====
 function getSession() {
   const raw = localStorage.getItem("session");
