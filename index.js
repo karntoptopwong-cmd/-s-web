@@ -50,7 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .from("users")
         .update({
           token: token,
-          token_expire: new Date(Date.now() + 86400000) // 1 วัน
+          token_expire: new Date(Date.now() + 86400000).toISOString()
+
         })
         .eq("id", data.id);
 
@@ -72,4 +73,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
 
