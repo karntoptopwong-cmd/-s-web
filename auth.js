@@ -52,3 +52,5 @@ window.getSession = getSession;
 window.requireAuth = requireAuth;
 window.logout = logout;
 window.getAuthHeader = getAuthHeader;
+export { requireAuth, getSession, logout, getAuthHeader };
+
