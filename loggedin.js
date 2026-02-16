@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🔐 ตรวจสอบ session
   const session = requireAuth();
+  console.log("SESSION ON DASHBOARD:", session);
+
   if (!session) return;
 
   const username = session.username;
@@ -16,59 +18,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
 
   if (!welcomeMsg || !pointsDisplay || !menuBtn || !sidebar || !logoutBtn) {
-    console.error("HTML element ไม่ครบ");
+    console.error("❌ HTML element ไม่ครบ");
     return;
   }
 
-  // แสดงข้อความต้อนรับ
+  // ✅ แสดงข้อความต้อนรับ
   welcomeMsg.textContent = `Welcome to the home page, ${username}`;
-  pointsDisplay.textContent = "Points: loading...";
 
-  // =============================
-  // โหลดคะแนน (เวอร์ชันใหม่)
-  // =============================
-  async function loadPoints() {
-    try {
+  // ✅ โหลดคะแนนจาก session ก่อน (เร็ว + ไม่พัง)
+  const userPoints = session.score ?? 0;
+  pointsDisplay.textContent = `Points: ${userPoints}`;
 
-      const res = await fetch(
-        "https://arduino-api-sain.onrender.com/score",
-        {
-          headers: {
-            Authorization: `Bearer ${session.token}`
-          }
-        }
-      );
-
-      const data = await res.json();
-
-      console.log("API response:", data); // 🔍 debug
-
-      // ถ้า token ไม่ถูกต้อง
-      if (!res.ok) {
-        pointsDisplay.textContent = "Session expired";
-        return;
-      }
-
-      // รองรับหลายรูปแบบ response
-      const userPoints =
-        data?.points ??
-        data?.score ??
-        data?.[username] ??
-        0;
-
-      pointsDisplay.textContent = `Points: ${userPoints}`;
-
-    } catch (err) {
-      console.error("โหลดคะแนนไม่ได้", err);
-      pointsDisplay.textContent = "Points: unavailable";
-    }
-  }
-
-  loadPoints();
-
-  // =============================
-  // UI Interaction
-  // =============================
+  // 🎛 UI interactions
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
   });
@@ -86,5 +47,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   logoutBtn.addEventListener("click", logout);
-
 });
