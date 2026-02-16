@@ -47,5 +47,5 @@ function getAuthHeader() {
   };
 }
 
-// ตรงนี้เป็นการ export
+// ✅ export แบบ module
 export { requireAuth, getSession, logout, getAuthHeader };
