@@ -56,15 +56,22 @@ document.addEventListener("DOMContentLoaded", () => {
         .eq("id", data.id);
 
       // ✅ บันทึก session ลงเครื่องผู้ใช้
-      localStorage.setItem("session", JSON.stringify({
-        username: data.username,
-        score: data.score,
-        token: token,
-        expireAt: Date.now() + 86400000
-      }));
+const sessionData = {
+  username: data.username,
+  score: data.score,
+  token: token,
+  expireAt: Date.now() + 86400000
+};
 
-      // ✅ ไปหน้า dashboard
-      window.location.href = "loggedin.html";
+localStorage.setItem("session", JSON.stringify(sessionData));
+
+// 🧪 DEBUG ตรวจว่าบันทึกจริงไหม
+console.log("SESSION SAVED:", sessionData);
+console.log("CHECK STORAGE:", localStorage.getItem("session"));
+
+// ✅ ไปหน้า dashboard
+window.location.href = "loggedin.html";
+
 
     } catch (err) {
       console.error(err);
@@ -73,5 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
 
 
