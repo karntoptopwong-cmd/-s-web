@@ -1,19 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
-const session = requireAuth();
-console.log("SESSION ON DASHBOARD:", session);
-
   // 🔐 ตรวจสอบ session
-  const session = requireAuth();
+  const session = requireAuth();  // ประกาศตัวแปร session ที่นี่เพียงครั้งเดียว
+  console.log("SESSION ON DASHBOARD:", session);
+
   if (!session || !session.token) {
     console.warn("Session not found");
     return;
   }
+
   const username = session.username;
   const token = session.token;
 
   const welcomeMsg = document.getElementById("welcomeMsg");
   const pointsDisplay = document.getElementById("points");
-@@ -28,67 +24,27 @@
+  const menuBtn = document.getElementById("menuBtn");
+  const sidebar = document.getElementById("sidebar");
+  const profileArea = document.getElementById("profileArea");
+  const historyBtn = document.getElementById("historyBtn");
+  const helpBtn = document.getElementById("helpBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (!welcomeMsg || !pointsDisplay || !menuBtn || !sidebar || !logoutBtn) {
+    console.error("HTML element ไม่ครบ");
+    return;
+  }
 
   // ✅ แสดงข้อความต้อนรับ
   welcomeMsg.textContent = `Welcome to the home page, ${username}`;
@@ -46,10 +56,7 @@ console.log("SESSION ON DASHBOARD:", session);
 
       // ✅ รองรับหลายรูปแบบ response
       const userPoints =
-        data?.points ??
-        data?.score ??
-        data?.[username] ??
-        0;
+        data?.points ?? data?.score ?? data?.[username] ?? 0;
 
       pointsDisplay.textContent = `Points: ${userPoints}`;
 
@@ -60,6 +67,7 @@ console.log("SESSION ON DASHBOARD:", session);
   }
 
   loadPoints();
+
   // 🎛 UI interactions
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
