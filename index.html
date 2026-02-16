@@ -33,19 +33,16 @@
 
   <!-- เอฟเฟคไฟฉาย -->
   <div id="spotlight"></div>
+<!-- โหลด Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- ✅ โหลด Supabase ก่อน -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- ✅ สร้าง client -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      window.supabaseClient = window.supabase.createClient(
-        "https://cbhfydsjuawdcgrzxzzu.supabase.co",
-        "sb_publishable_nM-AoZn8-WSz2FQQX0zbHQ_pvcKOKAJ"
-      );
-    });
-  </script>
+<!-- สร้าง client ทันที -->
+<script>
+  window.supabaseClient = window.supabase.createClient(
+    "https://cbhfydsjuawdcgrzxzzu.supabase.co",
+    "sb_publishable_nM-AoZn8-WSz2FQQX0zbHQ_pvcKOKAJ"
+  );
+</script>
 
   <!-- JS -->
   <script src="index.js" defer></script>
@@ -53,3 +50,4 @@
 
 </body>
 </html>
+
