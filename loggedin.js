@@ -1,5 +1,6 @@
-document.addEventListener("DOMContentLoaded", () => {
+import { requireAuth, logout } from "./auth.js";
 
+document.addEventListener("DOMContentLoaded", () => {
   // 🔐 ตรวจสอบ session
   const session = requireAuth();
   console.log("SESSION ON DASHBOARD:", session);
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ✅ แสดงข้อความต้อนรับ
+  console.log("Session data loaded:", session);
   welcomeMsg.textContent = `Welcome to the home page, ${username}`;
 
   // ✅ โหลดคะแนนจาก session ก่อน (เร็ว + ไม่พัง)
