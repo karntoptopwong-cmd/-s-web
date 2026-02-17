@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  console.log("profile.js loaded");
+
   // 🔐 ตรวจสอบการ login
   const session = window.requireAuth();
   if (!session) return;
@@ -7,40 +9,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const username = session.username;
   document.getElementById("usernameDisplay").textContent = username;
 
-  // ===== elements =====
   const profileForm = document.getElementById("profileForm");
   const editBtn = document.getElementById("editBtn");
   const saveBtn = document.getElementById("saveBtn");
 
-  if (!profileForm || !editBtn || !saveBtn) {
-    console.error("Profile element ไม่ครบ");
+  if (!editBtn || !profileForm || !saveBtn) {
+    console.error("Profile elements missing");
     return;
   }
 
   const inputs = profileForm.querySelectorAll("input");
 
-  // ===== โหลดข้อมูล =====
+  // โหลดข้อมูลจาก localStorage
   const key = `profile_${username}`;
-  let data = {};
-
-  try {
-    data = JSON.parse(localStorage.getItem(key)) || {};
-  } catch {
-    console.error("localStorage ไม่ใช่ JSON");
-  }
+  const savedData = JSON.parse(localStorage.getItem(key)) || {};
 
   inputs.forEach(input => {
-    input.value = data[input.id] || "";
+    input.value = savedData[input.id] || "";
     input.disabled = true;
   });
 
   saveBtn.disabled = true;
 
-  // =========================
-  // ✏️ EDIT MODE
-  // =========================
+  // ✏️ EDIT
   editBtn.addEventListener("click", () => {
-    console.log("EDIT CLICKED"); // debug
+    console.log("EDIT CLICKED");
 
     inputs.forEach(input => input.disabled = false);
 
@@ -48,10 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
     saveBtn.classList.add("active");
   });
 
-  // =========================
   // 💾 SAVE
-  // =========================
-  profileForm.addEventListener("submit", e => {
+  profileForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const newData = {};
