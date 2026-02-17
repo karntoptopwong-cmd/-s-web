@@ -20,16 +20,16 @@
     <form id="profileForm">
         <button type="button" id="editBtn" class="edit-btn">✏️ Edit</button>
 
-        <label>ชื่อ - นามสกุล <span class="required">(จำเป็น)</span></label>
+        <label>ชื่อ - นามสกุล</label>
         <input type="text" id="fullname" disabled required>
 
-        <label>ชั้น <span class="required">(จำเป็น)</span></label>
+        <label>ชั้น</label>
         <input type="text" id="class" disabled required>
 
-        <label>เลขที่ <span class="required">(จำเป็น)</span></label>
+        <label>เลขที่</label>
         <input type="text" id="number" disabled required>
 
-        <label>อีเมล <span class="required">(จำเป็น)</span></label>
+        <label>อีเมล</label>
         <input type="email" id="email" disabled required>
 
         <label>เบอร์โทร</label>
@@ -38,16 +38,20 @@
         <button type="submit" id="saveBtn" class="save-btn" disabled>Save</button>
     </form>
 
-    <a href="loggedin.html" class="back-btn">Home</a>
+    <a href="loggedin.html">Home</a>
 
 </div>
 
-<!-- spotlight -->
 <div id="spotlight"></div>
 
-<!-- JS -->
+<!-- ✅ โหลด auth ก่อน -->
+<script src="auth.js"></script>
+
+<!-- เอฟเฟกต์ -->
 <script src="effect.js" defer></script>
-<script type="module" src="profile.js"></script>
+
+<!-- ✅ profile script -->
+<script src="profile.js"></script>
 
 </body>
 </html>
