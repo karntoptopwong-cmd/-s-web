@@ -12,41 +12,37 @@
 
 <body>
 
-  <!-- ☰ -->
-  <button id="menuBtn" class="menu-btn">☰</button>
+<button id="menuBtn" class="menu-btn">☰</button>
 
-  <!-- Content -->
-  <div class="content">
-    <h1 id="welcomeMsg"></h1>
-    <p id="points"></p>
-    <button id="logoutBtn">Log Out</button>
+<div class="content">
+  <h1 id="welcomeMsg"></h1>
+  <p id="points"></p>
+  <button id="logoutBtn">Log Out</button>
+</div>
+
+<div id="sidebar" class="sidebar">
+
+  <div id="profileArea" class="profile-area">
+    <div class="avatar"></div>
+    <span class="profile-text">Profile</span>
   </div>
 
-  <!-- Sidebar -->
-  <div id="sidebar" class="sidebar">
-
-    <!-- Profile Section -->
-    <div id="profileArea" class="profile-area">
-      <div class="avatar"></div>
-      <span class="profile-text">Profile</span>
-    </div>
-
-    <!-- Menu -->
-    <div class="menu-list">
-      <button id="historyBtn">History</button>
-      <button id="helpBtn">Help</button>
-    </div>
-
+  <div class="menu-list">
+    <button id="historyBtn">History</button>
+    <button id="helpBtn">Help</button>
   </div>
 
-  <div id="spotlight"></div>
+</div>
 
-  <!-- ✅ สำคัญ -->
-  <script src="effect.js" defer></script>
-  <script src="auth.js"></script>
+<div id="spotlight"></div>
+
+<script src="effect.js" defer></script>
+<script src="auth.js"></script>
+
+<!-- ✅ เพิ่ม: Supabase library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
 <script src="loggedin.js"></script>
 
 </body>
 </html>
-
-
