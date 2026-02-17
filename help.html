@@ -4,30 +4,32 @@
   <meta charset="UTF-8">
   <title>Help</title>
 
+  <!-- ใช้โครงสร้าง CSS เดิมของเว็บ -->
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="effect.css">
+  <link rel="stylesheet" href="loggedin.css">
 </head>
 
 <body>
 
-<!-- ☰ ปุ่มเปิดเมนู -->
+<!-- ☰ ปุ่มเมนู -->
 <button id="menuBtn" class="menu-btn">☰</button>
 
-<!-- SIDEBAR -->
+<!-- Sidebar -->
 <div id="sidebar" class="sidebar">
 
-  <div class="profile-area" id="profileArea">
-    <img src="image-Photoroom.png" class="avatar">
-    <span id="usernameText"></span>
+  <div id="profileArea" class="profile-area">
+    <div class="avatar"></div>
+    <span class="profile-text">Profile</span>
   </div>
 
-  <nav>
-    <a href="loggedin.html"> Home</a>
-    <a href="history.html"> History</a>
-    <a href="help.html"> Help</a>
-  </nav>
+  <div class="menu-list">
+    <button id="homeBtn">Home</button>
+    <button id="historyBtn">History</button>
+    <button disabled>Help</button>
+    <button id="logoutBtn">Log out</button>
+  </div>
 
-  <button id="logoutBtn">Logout</button>
 </div>
 
 <!-- เนื้อหา -->
@@ -36,7 +38,6 @@
   <p>หน้านี้ใช้สำหรับช่วยเหลือผู้ใช้งาน</p>
 </div>
 
-<!-- spotlight -->
 <div id="spotlight"></div>
 
 <script src="effect.js" defer></script>
