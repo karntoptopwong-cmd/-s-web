@@ -1,14 +1,14 @@
-import { requireAuth, logout } from "./auth.js";
-
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ===== AUTH (ศูนย์กลาง) =====
-  const session = requireAuth();
+  console.log("history.js loaded");
+
+  // 🔐 ตรวจสอบ login
+  const session = window.requireAuth();
   if (!session) return;
 
   const username = session.username;
 
-  // ===== element =====
+  // ===== elements =====
   const historyList = document.getElementById("historyList");
   const menuBtn = document.getElementById("menuBtn");
   const sidebar = document.getElementById("sidebar");
@@ -16,17 +16,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileArea = document.getElementById("profileArea");
   const helpBtn = document.getElementById("helpBtn");
 
-  if (!historyList || !menuBtn || !sidebar || !logoutBtn) {
-    console.error("HTML element ไม่ครบ");
+  if (!menuBtn || !sidebar || !logoutBtn || !historyList) {
+    console.error("HTML element ไม่ครบ (history)");
     return;
   }
 
-  // ===== sidebar toggle =====
+  // ☰ เปิด/ปิด sidebar
   menuBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
   });
 
-  // ===== navigation =====
+  // navigation
   profileArea?.addEventListener("click", () => {
     location.href = "profile.html";
   });
@@ -35,10 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
     location.href = "help.html";
   });
 
-  // ===== logout (ใช้ auth.js เท่านั้น) =====
-  logoutBtn.addEventListener("click", logout);
+  logoutBtn.addEventListener("click", window.logout);
 
-  // ===== load history (localStorage ชั่วคราว) =====
+  // ===== โหลด history =====
   const historyKey = `history_${username}`;
   let historyData = [];
 
