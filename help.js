@@ -18,8 +18,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ☰ toggle sidebar
-  menuBtn.addEventListener("click", () => {
+  menuBtn.addEventListener("click", (e) => {
+    e.stopPropagation();  // ป้องกันการคลิกอื่นๆ
     sidebar.classList.toggle("open");
+  });
+
+  // คลิกที่อื่นแล้วปิด sidebar
+  document.addEventListener("click", (e) => {
+    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+      sidebar.classList.remove("open");
+    }
   });
 
   // navigation
