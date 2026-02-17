@@ -6,54 +6,56 @@
 
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="effect.css">
-  <link rel="stylesheet" href="loggedin.css">
   <link rel="stylesheet" href="help.css">
 </head>
 
 <body>
 
-<!-- ☰ -->
+<!-- ☰ ปุ่มเปิดเมนู -->
 <button id="menuBtn" class="menu-btn">☰</button>
 
-<!-- Sidebar -->
+<!-- SIDEBAR -->
 <div id="sidebar" class="sidebar">
 
-  <div id="profileArea" class="profile-area">
-    <div class="avatar"></div>
-    <span class="profile-text">Profile</span>
+  <div class="profile-area" id="profileArea">
+    <img src="image-Photoroom.png" class="avatar">
+    <span id="usernameText"></span>
   </div>
 
-  <div class="menu-list">
-    <button id="homeBtn">Home</button>
-    <button id="historyBtn">History</button>
-    <button disabled>Help</button>
-    <button id="logoutBtn">Log out</button>
-  </div>
+  <nav>
+    <a href="loggedin.html">Home</a>
+    <a href="history.html">History</a>
+    <a href="help.html">Help</a>
+  </nav>
 
+  <button id="logoutBtn">Logout</button>
 </div>
 
-<!-- ⭐ กล่องช่วยเหลือ -->
-<div class="help-card">
-  <h2>📞 Help Center</h2>
+<!-- เนื้อหา -->
+<div class="content">
 
-  <p class="help-text">
-    หากว่าเธอ lonely โทรมาที่เบอร์นี้
-  </p>
+  <div class="help-card">
+    <h2>📞 Help Center</h2>
 
-  <ul class="phone-list">
-    <li>099-221-6902</li>
+    <p class="help-text">หากว่าเธอ lonely โทรมาที่เบอร์นี้</p>
+
+    <ul class="phone-list">
+      <li>099-221-6902</li>
     <li>094-957-1409</li>
     <li>095-967-9152</li>
     <li>063-218-3264</li>
-  </ul>
+    </ul>
 
-  <a href="loggedin.html" class="home-btn"> Back</a>
+    <a href="loggedin.html" class="home-btn">Back</a>
+  </div>
+
 </div>
 
+<!-- spotlight -->
 <div id="spotlight"></div>
 
 <script src="effect.js" defer></script>
-<script type="module" src="help.js"></script>
+<script type="module" src="help.js" defer></script>
 
 </body>
 </html>
