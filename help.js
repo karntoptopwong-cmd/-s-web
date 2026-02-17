@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ☰ toggle sidebar
   menuBtn.addEventListener("click", (e) => {
-    e.stopPropagation();  // ป้องกันการคลิกอื่นๆ
+    e.stopPropagation();  // ป้องกันการคลิกที่ผิด
     sidebar.classList.toggle("open");
   });
 
