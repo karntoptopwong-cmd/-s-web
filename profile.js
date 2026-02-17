@@ -1,18 +1,13 @@
-import { requireAuth } from "./auth.js";
-
 document.addEventListener("DOMContentLoaded", () => {
-  // =============================
-  // 1️⃣ Auth (เหมือนของคุณ)
-  // =============================
-  const session = requireAuth();
+
+  // 🔐 ตรวจสอบการ login
+  const session = window.requireAuth();
   if (!session) return;
 
   const username = session.username;
   document.getElementById("usernameDisplay").textContent = username;
 
-  // =============================
-  // 2️⃣ Form + ปุ่ม (ชัดแบบคุณ)
-  // =============================
+  // ===== elements =====
   const profileForm = document.getElementById("profileForm");
   const editBtn = document.getElementById("editBtn");
   const saveBtn = document.getElementById("saveBtn");
@@ -22,14 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // =============================
-  // 3️⃣ Inputs (ยืดหยุ่นแบบผม)
-  // =============================
   const inputs = profileForm.querySelectorAll("input");
 
-  // =============================
-  // 4️⃣ Load ข้อมูล
-  // =============================
+  // ===== โหลดข้อมูล =====
   const key = `profile_${username}`;
   let data = {};
 
@@ -41,24 +31,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   inputs.forEach(input => {
     input.value = data[input.id] || "";
-    input.disabled = true; // 🔒 ล็อกตั้งแต่แรก
+    input.disabled = true;
   });
 
   saveBtn.disabled = true;
 
-  // =============================
-  // 5️⃣ EDIT
-  // =============================
+  // =========================
+  // ✏️ EDIT MODE
+  // =========================
   editBtn.addEventListener("click", () => {
+    console.log("EDIT CLICKED"); // debug
+
     inputs.forEach(input => input.disabled = false);
 
     saveBtn.disabled = false;
     saveBtn.classList.add("active");
   });
 
-  // =============================
-  // 6️⃣ SAVE (พร้อมต่อ server)
-  // =============================
+  // =========================
+  // 💾 SAVE
+  // =========================
   profileForm.addEventListener("submit", e => {
     e.preventDefault();
 
@@ -66,24 +58,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     inputs.forEach(input => {
       newData[input.id] = input.value;
-      input.disabled = true; // 🔒 ล็อกกลับ
+      input.disabled = true;
     });
 
-    // localStorage (ตอนนี้)
     localStorage.setItem(key, JSON.stringify(newData));
-
-    // 👉 อนาคตต่อ server ตรงนี้
-    /*
-    fetch("/api/profile", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newData)
-    });
-    */
 
     saveBtn.disabled = true;
     saveBtn.classList.remove("active");
 
     alert("บันทึกข้อมูลเรียบร้อยแล้ว");
   });
+
 });
