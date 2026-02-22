@@ -1,3 +1,4 @@
+/* ===== Help Card ===== */
 .help-card {
   background: #fff;
   padding: 30px 40px;
@@ -32,6 +33,38 @@
   letter-spacing: 1px;
 }
 
+
+/* ===== Sidebar Menu Cards ===== */
+
+.nav-menu {
+  margin-top: 20px;
+}
+
+.menu-card {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  border: none;
+  backdrop-filter: blur(6px);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.menu-card:hover {
+  background: rgba(255,255,255,0.28);
+  transform: translateY(-2px);
+}
+
+
+/* ===== Back Button ===== */
+
 .home-btn {
   display: inline-block;
   background: #0d6efd;
@@ -41,7 +74,6 @@
   text-decoration: none;
   font-weight: bold;
 }
-
 
 .home-btn:hover {
   background: #0b5ed7;
