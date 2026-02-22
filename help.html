@@ -6,7 +6,7 @@
 
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="effect.css">
-  <link rel="stylesheet" href="loggedin.css"> <!-- เพิ่มบรรทัดนี้ -->
+  <link rel="stylesheet" href="loggedin.css">
   <link rel="stylesheet" href="help.css">
 </head>
 
@@ -23,12 +23,14 @@
     <span id="usernameText"></span>
   </div>
 
-  <nav>
-    
-    <a href="history.html">History</a>
+  <!-- เมนูแบบกล่อง -->
+  <nav class="nav-menu">
+    <a href="history.html" class="menu-card">History</a>
   </nav>
 
-  <button id="logoutBtn">Logout</button>
+  <!-- ปุ่มออกจากระบบ -->
+  <button id="logoutBtn" class="menu-card">Logout</button>
+
 </div>
 
 <!-- เนื้อหา -->
@@ -51,7 +53,7 @@
 
 </div>
 
-<!-- spotlight -->
+<!-- spotlight effect -->
 <div id="spotlight"></div>
 
 <script src="effect.js" defer></script>
