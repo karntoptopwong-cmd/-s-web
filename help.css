@@ -42,10 +42,6 @@
   font-weight: bold;
 }
 
-.sidebar.open {
-  left: 0;  /* เมื่อเปิด sidebar เลื่อนเข้ามา */
-  transition: left 0.3s ease;
-}
 
 .home-btn:hover {
   background: #0b5ed7;
