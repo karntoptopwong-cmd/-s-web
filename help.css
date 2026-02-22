@@ -45,20 +45,19 @@
   width: 100%;
   padding: 14px;
   margin: 12px 0;
-  background: rgba(255,255,255,0.15);
+  background: #f1f1f1;
   border-radius: 12px;
   text-align: center;
   text-decoration: none;
   color: #333;
   font-weight: 500;
   border: none;
-  backdrop-filter: blur(6px);
   transition: all 0.25s ease;
   cursor: pointer;
 }
 
 .menu-card:hover {
-  background: rgba(255,255,255,0.28);
+  background: #e0e0e0;
   transform: translateY(-2px);
 }
 
