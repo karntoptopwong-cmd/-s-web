@@ -20,7 +20,30 @@
   font-size: 18px;
   color: #333;
 }
+/* ===== Sidebar Header ===== */
 
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+/* วงกลมโปรไฟล์ */
+.profile-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0d6efd, #003f88);
+}
+
+/* ข้อความ Profile */
+.profile-title {
+  font-size: 20px;
+  color: #333;
+  font-weight: 500;
+}
 .phone-list {
   list-style: none;
   padding: 0;
